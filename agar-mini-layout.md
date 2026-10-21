@@ -29,17 +29,19 @@ Legend: `·` = same as base. `(x)` = what the key gives when held. `1×` = stick
 Esc    Q    W    E(è) R    T    Y    U(ù) I(ì) O(ò) P    '(é) Bksp
 Tab    A(à) S    D    F    G    H    J    K    L    ;    Enter
 Shift1× Z   X    C    V    B    N    M    ,    .    /    -
-       Ctrl1× Super [Space/NAV]  [Space/NUM]  Shift1× Alt1×
+       Ctrl1× Super [Space/NAV]  [Space/NUM]  Shift1× ↑
 ```
 
 - Vowels: tap = letter, hold = accented letter. Shift first gives the capital (È).
 - `'`: tap = plain apostrophe, hold = é. Shift + `'` = plain `"`.
-- `Shift`, `Ctrl`, `Alt`: sticky. Tap, then the next key. They can also be held normally.
+- `Shift`, `Ctrl`: sticky. Tap, then the next key. They can also be held normally.
 - `Super`: plain key, no hold behaviour.
 - `Space/NAV` (left thumb): tap = Space, hold = NAV.
 - `Space/NUM` (right thumb): tap = Space, hold = NUM.
 - `Shift` (stock ← key, right thumb): a second sticky Shift, for capitals, `?`, `"`, È and
   Shift+Enter without moving the left hand.
+- `↑` (stock ↓ key): plain Up arrow, to recall the last command. Holding it repeats.
+  The other arrows and Alt are on NAV.
 - Hold both Spaces for FN.
 
 ### Layer 1 — NUM (hold right Space)
@@ -94,13 +96,14 @@ Caps   BT1  BT2  BT3  USB  BLE  Prev Vol- Vol+ Next Play Mute
 | `!` | | hold right Space, tap `Z` |
 | Number | | hold right Space, tap the key above it (`Q` = 1 … `P` = 0) |
 | Backspace | | top-right corner, as on the Q4 |
+| Run the last command again | `Up`, `Enter` | tap ↑ (bottom right), tap Enter |
 | Copy / paste | `Ctrl+C` / `Ctrl+V` | tap Ctrl, tap `C` / `V` |
 | Kitty copy / paste | `Ctrl+Shift+C/V` | tap Ctrl, tap Shift, tap `C` / `V` |
 | Switch workspace | `Super+3` | hold Super + hold right Space + tap `E` |
 | Move window to workspace | `Super+Shift+3` | tap Shift, then hold Super + hold right Space + tap `E` |
 | Other mango shortcuts | `Super+Return`, `Super+q`, … | hold Super + tap the key |
 | Focus direction | `Super+Left` | hold left Space, tap `A`, tap `H` |
-| Kitty tab | `Alt+3` | tap Alt, hold right Space, tap `E` |
+| Kitty tab | `Alt+3` | hold left Space, tap `S` (Alt), then hold right Space + tap `E` |
 | Accept fish autosuggestion | `Right` | hold left Space, tap `L` |
 
 No mango config changes are needed.
@@ -151,4 +154,4 @@ quotes get an extra space.
 ## Dropped from the stock layout
 
 Mouse keys (trackpad available), `Win+V`, Print Screen (mango uses `Super+Shift+S`),
-Insert, Pause, Scroll Lock, arrow cluster (now on NAV), right Alt.
+Insert, Pause, Scroll Lock, right Alt, arrow cluster (↑ kept bottom right, the rest on NAV).

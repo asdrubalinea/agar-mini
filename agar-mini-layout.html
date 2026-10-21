@@ -135,13 +135,14 @@
           <tr><td>Question / exclamation mark</td><td class="combo">? / !</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>/</kbd> &nbsp;/&nbsp; <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Z</kbd></td></tr>
           <tr><td>Number</td><td class="combo">1 … 0</td><td><span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Q</kbd> … <kbd>P</kbd></td></tr>
           <tr><td>Backspace</td><td class="combo"></td><td>top-right corner, as on the Q4</td></tr>
+          <tr><td>Run the last command again</td><td class="combo">Up, Enter</td><td><span class="tap">tap</span> <kbd>↑</kbd> (bottom right), <span class="tap">tap</span> <kbd>Enter</kbd></td></tr>
           <tr><td>Copy / paste</td><td class="combo">Ctrl+C / Ctrl+V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
           <tr><td>Kitty copy / paste</td><td class="combo">Ctrl+Shift+C / V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
           <tr><td>Switch workspace</td><td class="combo">Super+3</td><td><span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
           <tr><td>Move window to workspace</td><td class="combo">Super+Shift+3</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, then <span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
           <tr><td>Other mango shortcuts</td><td class="combo">Super+Return, Super+q</td><td><span class="hold">hold</span> <kbd>Super</kbd> + the key</td></tr>
           <tr><td>Focus direction</td><td class="combo">Super+Left</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>A</kbd>, <span class="tap">tap</span> <kbd>H</kbd></td></tr>
-          <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><span class="tap">tap</span> <kbd>Alt</kbd>, <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>S</kbd> (Alt), then <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
           <tr><td>Accept fish autosuggestion</td><td class="combo">Right</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>L</kbd></td></tr>
         </tbody>
       </table>
@@ -188,7 +189,7 @@
         <h3>Requires <code>us intl</code></h3>
         <p class="muted">Accents and plain quotes are typed as <code>us intl</code> dead-key sequences: <code>`</code> + vowel for è, <code>'</code> + <code>e</code> for é, <code>'</code> + Space for <code>'</code>. On a device with a plain US layout, accents come out as <code>`e</code> and quotes get an extra space.</p>
         <h3 style="margin-top: 2.5mm">Dropped from stock</h3>
-        <p class="muted">Mouse keys (trackpad available), Win+V, Print Screen (mango uses Super+Shift+S), Insert, Pause, Scroll Lock, right Alt, arrow cluster (now on NAV).</p>
+        <p class="muted">Mouse keys (trackpad available), Win+V, Print Screen (mango uses Super+Shift+S), Insert, Pause, Scroll Lock, right Alt, arrow cluster (↑ kept bottom right, the rest on NAV).</p>
       </div>
     </div>
 
@@ -221,7 +222,7 @@ const LAYERS = [
       ["Esc","Q","W",acc("E","è"),"R","T","Y",acc("U","ù"),acc("I","ì"),acc("O","ò"),"P",acc("'","é"),"Bksp"],
       ["Tab",acc("A","à"),"S","D","F","G","H","J","K","L",[":",";"],"Enter"],
       [sk("Shift"),"Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
-      [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},sk("Shift"),sk("Alt")],
+      [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},sk("Shift"),"↑"],
     ],
     side: [
       ["accent:è", "<b>Hold for the accent</b><br>à è ì ò ù, and é on <code>'</code>"],
@@ -231,6 +232,7 @@ const LAYERS = [
       ["held2", "<b>Both Spaces</b> for Layer 3"],
       ["'", "<b>Plain apostrophe</b>; Shift gives <code>\"</code>"],
       ["Super", "<b>Plain key</b>, hold it"],
+      ["↑", "<b>Up arrow</b> for the last command"],
     ],
   },
   {
