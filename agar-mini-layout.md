@@ -74,12 +74,13 @@ Shift1× Z   X    C    V    B    N    M    ,    .    /    -
 ```
 Boot   F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12
 Caps   BT1  BT2  BT3  USB  BLE  Prev Vol- Vol+ Next Play Mute
-·      BTclr ·  ·    ·    ·    ·    ·    ·    ·    ·    ·
+·      ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·
        ·    ·    held           held      ·    ·
 ```
 
-- `Boot` enters the bootloader for flashing.
-- `BT1–3` select Bluetooth profiles; `BTclr` clears the current profile's pairing.
+- `Boot`: hold 3 s to enter the bootloader for flashing; a short tap restarts the keyboard.
+- `BT1–3`: tap to select a Bluetooth profile, hold 3 s to clear its pairing.
+  These are the stock KBDfans keys, so the status light reacts as before.
 - `USB` / `BLE` switch the output.
 
 ## Everyday actions
@@ -142,14 +143,63 @@ The keyboard types accents and plain quotes by sending `us intl` dead-key sequen
 On a device with a plain US layout (e.g. over Bluetooth), accents come out as `` `e `` and
 quotes get an extra space.
 
-## ZMK implementation notes
+## Status light
+
+The single RGB light comes from KBDfans' indicator code and is unchanged:
+
+| Light | Meaning |
+|---|---|
+| Yellow / cyan / magenta blinking | Bluetooth profile 1 / 2 / 3: 3 blinks when connected, ~15 s while connecting |
+| Profile colour alternating with red | That profile isn't paired yet |
+| Profile colour alternating with blue | Paired, but the device isn't connecting |
+| Red blinking | Battery at 10% or less, on battery power |
+| Steady magenta | Caps Lock on |
+
+## Firmware
+
+The firmware is ZMK, built from KBDfans' own config for the dual-mode Agar mini
+([openkbd/zmk-config-agar-mini-ble](https://github.com/openkbd/zmk-config-agar-mini-ble)),
+on yangdigi's ZMK fork and `klink` board, with ZMK Studio enabled.
+
+| File | What it is |
+|---|---|
+| `config/agar_mini_ble.keymap` | This layout |
+| `config/boards/shields/klink_kbd/` | KBDfans' shield: matrix, physical layout, status light, stock keymap |
+| `config/west.yml` | ZMK fork and board, pinned to exact commits |
+| `flake.nix` | Nix build via [zmk-nix](https://github.com/lilyinstarlight/zmk-nix) |
+
+Changes to KBDfans' files: sticky keys re-enabled in `common.keymap` (KBDfans omits them),
+and two status-light callbacks in `klink_indicator.c` now return a value as ZMK expects.
+
+### Build
+
+```
+nix build
+```
+
+The firmware lands in `result/zmk.uf2`. After changing `config/west.yml`, run `nix run .#update`
+to refresh the dependency hash.
+
+### Flash
+
+1. Connect the keyboard by USB.
+2. Enter the bootloader. It appears as a USB drive.
+   - From this layout: hold both Spaces and hold `Esc` (`Boot`) for 3 seconds.
+   - From the stock KBDfans firmware: hold the stock → key (layer 3) and hold `B` for 3 seconds.
+     That's where KBDfans' source puts it; if nothing happens, their published file may differ.
+3. Run `nix run .#flash` (or copy `result/zmk.uf2` onto the drive). The keyboard restarts with the new layout.
+
+To go back to stock, flash KBDfans' `agar_mini-klink-zmk.uf2` from the
+[product page](https://kbdfans.com/products/agar-mini) the same way.
+
+### Implementation notes
 
 - Vowels: hold-tap (tap-preferred, 250 ms). Tap `&kp E`; hold = mod-morph between two macros
   (`` ` `` E and `` ` `` Shift+E).
 - `'`: hold-tap. Tap = mod-morph (`'` Space / Shift+`'` Space); hold = mod-morph (`'` E / `'` Shift+E).
-- Sticky modifiers: `&sk LSHIFT`, `&sk LCTRL`, `&sk LALT`, `&sk LGUI` with `release-after-ms = 1500`
-  and `quick-release`.
+- Sticky modifiers: `&sk` with `release-after-ms = 1500` and `quick-release`.
 - FN: conditional layer, active when NAV and NUM are both active.
+- Layers 4–7 are reserved so ZMK Studio can add layers later.
 
 ## Dropped from the stock layout
 
