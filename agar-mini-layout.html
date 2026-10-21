@@ -5,6 +5,9 @@
 <title>Agar mini Layout</title>
 <style>
   @page { size: A4; margin: 0; }
+  /* The legend font's quote glyphs are hairlines; borrow them from Noto Sans */
+  @font-face { font-family: "Punct"; src: local("Noto Sans Bold"), local("NotoSans-Bold"); font-weight: bold; unicode-range: U+22, U+27, U+60; }
+  @font-face { font-family: "Punct"; src: local("Noto Sans"), local("NotoSans-Regular"); font-weight: normal; unicode-range: U+22, U+27, U+60; }
   :root {
     --ink: #2b2827;
     --muted: #6f6a68;
@@ -12,7 +15,7 @@
     --band: #cdc8c6;
     --chip: #a9a3a1;
     --held: #dcd8d6;
-    --legend-font: "TeX Gyre Adventor", "Noto Sans", "Symbols Nerd Font", sans-serif;
+    --legend-font: "Punct", "TeX Gyre Adventor", "Noto Sans", "Symbols Nerd Font", sans-serif;
     --body-font: "Noto Sans", "Symbols Nerd Font", sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,16 +41,17 @@
   .tip b { color: var(--ink); }
 
   /* Layers */
-  .layer { margin-bottom: 6mm; }
+  .layer { margin-bottom: 5mm; }
   .layer h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 4.6mm; margin-bottom: 2.2mm; }
   .layer h2 span { color: var(--muted); font-size: 3.2mm; margin-left: 2mm; }
   .layer-body { display: flex; gap: 5mm; align-items: flex-start; }
   .kb { position: relative; flex: none; }
-  .side { flex: 1; font-size: 2.3mm; color: var(--ink); padding-top: 0.5mm; }
-  .side .item { display: flex; gap: 1.6mm; align-items: flex-start; margin-bottom: 2mm; line-height: 1.3; }
+  .side { flex: 1; font-size: 2.2mm; color: var(--ink); padding-top: 0.5mm; }
+  .side .item { display: flex; gap: 1.6mm; align-items: flex-start; margin-bottom: 1.5mm; line-height: 1.3; }
   .side .mark { flex: none; min-width: 7mm; font-family: var(--legend-font); font-size: 2.9mm; text-align: center; }
   .side .desc { color: var(--muted); }
   .side .desc b { color: var(--ink); font-weight: 600; }
+  .side code { font-family: "DejaVu Sans Mono", monospace; font-size: 2mm; color: var(--ink); }
 
   /* Keys */
   .key { position: absolute; }
@@ -64,28 +68,34 @@
   .chip { position: absolute; left: 0.6mm; bottom: 0.45mm; background: var(--chip); color: #fff;
           font-family: var(--body-font); font-weight: 600; font-size: 1.55mm; line-height: 1;
           padding: 0.3mm 0.6mm; border-radius: 0.5mm; letter-spacing: 0.1mm; }
-  .side .chip { position: static; display: inline-block; font-size: 1.9mm; padding: 0.4mm 0.8mm; }
+  .chip.accent { font-size: 2.7mm; padding: 0.1mm 0.8mm 0.3mm; letter-spacing: 0; }
+  .sticky { position: absolute; right: 0.6mm; bottom: 0.45mm; border: 0.15mm solid var(--chip); color: var(--muted);
+            font-family: var(--body-font); font-weight: 600; font-size: 1.55mm; line-height: 1;
+            padding: 0.2mm 0.45mm; border-radius: 0.5mm; background: #fff; }
+  .side .chip, .side .sticky { position: static; display: inline-block; font-size: 1.9mm; padding: 0.4mm 0.8mm; }
+  .side .chip.accent { font-size: 2.7mm; padding: 0.1mm 0.8mm 0.3mm; }
 
   /* Page 2 */
-  .section { margin-bottom: 6mm; }
-  .section h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 4.8mm; margin-bottom: 2.5mm; }
-  table { width: 100%; border-collapse: collapse; font-size: 2.6mm; }
-  th { text-align: left; font-weight: 600; color: var(--muted); font-size: 2.3mm; text-transform: uppercase;
-       letter-spacing: 0.2mm; border-bottom: 0.3mm solid var(--line); padding: 1.2mm 1.5mm; }
-  td { padding: 1.5mm 1.5mm; border-bottom: 0.15mm solid #d8d4d2; vertical-align: middle; }
-  td.combo { font-family: "DejaVu Sans Mono", monospace; font-size: 2.4mm; color: var(--muted); white-space: nowrap; }
+  .section { margin-bottom: 5mm; }
+  .section h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 4.8mm; margin-bottom: 2mm; }
+  table { width: 100%; border-collapse: collapse; font-size: 2.5mm; }
+  th { text-align: left; font-weight: 600; color: var(--muted); font-size: 2.2mm; text-transform: uppercase;
+       letter-spacing: 0.2mm; border-bottom: 0.3mm solid var(--line); padding: 1mm 1.5mm; }
+  td { padding: 1.05mm 1.5mm; border-bottom: 0.15mm solid #d8d4d2; vertical-align: middle; }
+  td.combo { font-family: "DejaVu Sans Mono", monospace; font-size: 2.3mm; color: var(--muted); white-space: nowrap; }
   td.num { font-variant-numeric: tabular-nums; }
-  kbd { display: inline-block; font-family: var(--legend-font); font-weight: bold; font-size: 2.3mm;
+  kbd { display: inline-block; font-family: var(--legend-font); font-weight: bold; font-size: 2.2mm;
         border: 0.2mm solid var(--line); border-bottom-width: 0.55mm; border-radius: 0.6mm;
-        padding: 0.25mm 1mm; margin: 0.3mm 0; background: #fff; line-height: 1.2; }
-  .hold { font-size: 2.2mm; color: var(--muted); }
-  .note { font-size: 2.4mm; color: var(--muted); margin-top: 2mm; line-height: 1.45; }
-  .note li { margin-left: 4mm; margin-bottom: 0.8mm; }
-  .note code, .cols code { font-family: "DejaVu Sans Mono", monospace; font-size: 2.2mm; color: var(--ink); }
-  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; font-size: 2.5mm; line-height: 1.45; }
-  .cols h3 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 3.8mm; margin-bottom: 1.5mm; }
+        padding: 0.2mm 1mm; margin: 0.2mm 0; background: #fff; line-height: 1.2; }
+  .hold, .tap { font-size: 2.1mm; color: var(--muted); }
+  .note { font-size: 2.3mm; color: var(--muted); margin-top: 1.5mm; line-height: 1.45; }
+  .note li { margin-left: 4mm; margin-bottom: 0.6mm; }
+  .note code, .cols code, td code { font-family: "DejaVu Sans Mono", monospace; font-size: 2.1mm; color: var(--ink); }
+  .tables { display: grid; grid-template-columns: 1.6fr 1fr; gap: 6mm; align-items: start; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; font-size: 2.4mm; line-height: 1.45; }
+  .cols h3 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 3.8mm; margin-bottom: 1.2mm; }
   .cols ol, .cols ul { margin-left: 4mm; }
-  .cols li { margin-bottom: 1.2mm; }
+  .cols li { margin-bottom: 0.9mm; }
   .cols .muted { color: var(--muted); }
 </style>
 </head>
@@ -98,7 +108,7 @@
     <div class="corner">ZMK FIRMWARE</div>
   </header>
   <div class="content">
-    <p class="tip">Quick tip: a key with a <b>grey tag</b> types its legend when tapped and acts as the tag when held. Blank keys pass through to Layer 0.</p>
+    <p class="tip">Quick tip: a <b>grey tag</b> is what the key does when held. <b>1×</b> marks a sticky key: tap it, then the next key. Blank keys pass through to Layer 0.</p>
     <div id="layers"></div>
   </div>
 </section>
@@ -106,47 +116,60 @@
 <section class="page">
   <header class="band small">
     <div class="brand">Agar mini</div>
-    <div class="subtitle"><div class="b">Shortcuts &amp; Tuning</div></div>
+    <div class="subtitle"><div class="b">Everyday Actions &amp; Timing</div></div>
     <div class="corner">ZMK FIRMWARE</div>
   </header>
-  <div class="content" style="padding-top: 7mm">
+  <div class="content" style="padding-top: 6mm">
 
     <div class="section">
-      <h2>Everyday shortcuts</h2>
+      <h2>Everyday actions</h2>
       <table>
         <thead><tr><th>Action</th><th>Sends</th><th>Keys</th></tr></thead>
         <tbody>
-          <tr><td>Switch workspace</td><td class="combo">Super+3</td><td><kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
-          <tr><td>Move window to workspace</td><td class="combo">Super+Shift+3</td><td><kbd>Super</kbd> + <kbd>Shift</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
-          <tr><td>Workspaces 6–0</td><td class="combo">Super+6 … Super+0</td><td>Same chord with <kbd>Y</kbd> <kbd>U</kbd> <kbd>I</kbd> <kbd>O</kbd> <kbd>P</kbd>, nothing pinned</td></tr>
-          <tr><td>Terminal / kill / overview</td><td class="combo">Super+Return, Super+q, Super+e</td><td><kbd>Super</kbd> + one key</td></tr>
-          <tr><td>Move / resize window</td><td class="combo">Super+drag</td><td><kbd>Super</kbd> + left or right mouse drag</td></tr>
-          <tr><td>Focus direction</td><td class="combo">Super+Left</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>A</kbd> + <kbd>H</kbd></td></tr>
-          <tr><td>Swap window</td><td class="combo">Super+Shift+Left</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>A</kbd> + <kbd>F</kbd> + <kbd>H</kbd></td></tr>
-          <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><kbd>Alt</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
-          <tr><td>Terminal Ctrl, tmux prefix</td><td class="combo">Ctrl+C, Ctrl+R, Ctrl+P</td><td><span class="hold">hold</span> <kbd>Tab</kbd> + letter</td></tr>
-          <tr><td>Kitty copy / paste</td><td class="combo">Ctrl+Shift+C / V</td><td><span class="hold">hold</span> <kbd>Enter</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> / <kbd>V</kbd></td></tr>
-          <tr><td>Accept fish autosuggestion</td><td class="combo">Right / Ctrl+F</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>L</kbd>, or <span class="hold">hold</span> <kbd>Tab</kbd> + <kbd>F</kbd></td></tr>
+          <tr><td>è à ì ò ù</td><td class="combo"></td><td><span class="hold">hold</span> the vowel</td></tr>
+          <tr><td>é</td><td class="combo"></td><td><span class="hold">hold</span> <kbd>'</kbd></td></tr>
+          <tr><td>È</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="hold">hold</span> <kbd>E</kbd></td></tr>
+          <tr><td>Capital letter</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> the letter</td></tr>
+          <tr><td>Apostrophe / quote</td><td class="combo">' / "</td><td><span class="tap">tap</span> <kbd>'</kbd> &nbsp;/&nbsp; <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>'</kbd></td></tr>
+          <tr><td>Newline in Claude Code</td><td class="combo">Shift+Enter</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>Enter</kbd></td></tr>
+          <tr><td>Question / exclamation mark</td><td class="combo">? / !</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>/</kbd> &nbsp;/&nbsp; <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Z</kbd></td></tr>
+          <tr><td>Number</td><td class="combo">1 … 0</td><td><span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Q</kbd> … <kbd>P</kbd></td></tr>
+          <tr><td>Backspace</td><td class="combo"></td><td>right thumb, the key right of <kbd>R Space</kbd></td></tr>
+          <tr><td>Copy / paste</td><td class="combo">Ctrl+C / Ctrl+V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
+          <tr><td>Kitty copy / paste</td><td class="combo">Ctrl+Shift+C / V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
+          <tr><td>Switch workspace</td><td class="combo">Super+3</td><td><span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Move window to workspace</td><td class="combo">Super+Shift+3</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, then <span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Other mango shortcuts</td><td class="combo">Super+Return, Super+q</td><td><span class="hold">hold</span> <kbd>Super</kbd> + the key</td></tr>
+          <tr><td>Focus direction</td><td class="combo">Super+Left</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>A</kbd>, <span class="tap">tap</span> <kbd>H</kbd></td></tr>
+          <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><span class="tap">tap</span> <kbd>Alt</kbd>, <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Accept fish autosuggestion</td><td class="combo">Right</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>L</kbd></td></tr>
         </tbody>
       </table>
-      <p class="note">No mango config changes are needed: every chord sends exactly what a full-size keyboard would.</p>
+      <p class="note">No mango config changes are needed: every action sends exactly what a full-size keyboard would.</p>
     </div>
 
     <div class="section">
-      <h2>Hold-tap tuning</h2>
-      <table>
-        <thead><tr><th>Key</th><th>Flavor</th><th>tapping-term-ms</th><th>quick-tap-ms</th><th>require-prior-idle-ms</th></tr></thead>
-        <tbody>
-          <tr><td>Space / NAV</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td class="num">150</td></tr>
-          <tr><td>Space / NUM</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td>—</td></tr>
-          <tr><td>Tab / Ctrl, Enter / Ctrl</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td class="num">150</td></tr>
-        </tbody>
-      </table>
+      <h2>Timing</h2>
+      <div class="tables">
+        <table>
+          <thead><tr><th>Key</th><th>Flavor</th><th>Term</th><th>Quick-tap</th><th>Prior idle</th></tr></thead>
+          <tbody>
+            <tr><td>Space / NAV</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td class="num">150</td></tr>
+            <tr><td>Space / NUM</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td>—</td></tr>
+            <tr><td>Vowels and <code>'</code></td><td>tap-preferred</td><td class="num">250</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <table>
+          <thead><tr><th>Sticky keys</th><th>Release after</th><th>Quick release</th></tr></thead>
+          <tbody>
+            <tr><td>Shift, Ctrl, Alt, Super</td><td class="num">1500</td><td>yes</td></tr>
+          </tbody>
+        </table>
+      </div>
       <ul class="note">
-        <li><code>quick-tap-ms</code>: tap then hold repeats the tap key, e.g. hold Space for repeated spaces.</li>
-        <li><code>require-prior-idle-ms</code>: pressed mid-word, the key is a plain tap, which prevents misfires.</li>
-        <li>Space / NUM has no <code>require-prior-idle-ms</code>; otherwise typing <code>port 8080</code> quickly would give letters instead of digits.</li>
-        <li>Super and Alt are plain keys with no hold-tap, so typing can never fire <code>Super+q</code> or <code>Super+n</code>.</li>
+        <li>All values in milliseconds. Vowels are decided by time only: shorter than 250 ms types the letter, longer gives the accent; they type on release.</li>
+        <li>Sticky keys apply to the next key only and expire after 1.5 s. Tapping Ctrl then Shift stacks them. They can also be held normally.</li>
+        <li>Space / NUM has no prior-idle setting; otherwise typing <code>port 8080</code> quickly would give letters instead of digits.</li>
       </ul>
     </div>
 
@@ -154,20 +177,18 @@
       <div>
         <h3>Design</h3>
         <ol>
-          <li><b>Super is a plain key</b> under the left thumb, on the stock Alt position.</li>
-          <li><b>One layer per thumb.</b> Left Space holds NAV, right Space holds NUM; both type a space when tapped.</li>
-          <li><b>Ctrl on the home row:</b> hold Tab or hold Enter.</li>
-          <li><b>No arrow cluster.</b> Arrows live on hjkl in NAV; the freed keys hold <code>'</code> <code>/</code> <code>-</code>.</li>
+          <li><b>Thumbs hold, nails tap one key at a time.</b> No pinkies, no ring-finger chords; ring fingers only reach Esc and Backspace.</li>
+          <li><b>Long-press vowels</b> for Italian accents, like a phone keyboard.</li>
+          <li><b>Sticky Shift, Ctrl and Alt:</b> tap, then the next key.</li>
+          <li><b><code>'</code> and <code>"</code> are always plain</b>, despite <code>us intl</code> dead keys.</li>
+          <li><b>Super under the left thumb, Backspace under the right.</b></li>
         </ol>
       </div>
       <div>
-        <h3>Optional extras</h3>
-        <ul>
-          <li><b>Combo J+K = Esc</b>, popular with Helix users.</li>
-          <li><b>xkb variant <code>altgr-intl</code></b>: <code>us intl</code> makes <code>' " ` ~ ^</code> dead keys; <code>altgr-intl</code> keeps accents behind AltGr.</li>
-        </ul>
-        <h3 style="margin-top: 3mm">Dropped from stock</h3>
-        <p class="muted">Mouse keys (trackpad available), Win+V, Print Screen (mango uses Super+Shift+S), Insert, Pause, Scroll Lock.</p>
+        <h3>Requires <code>us intl</code></h3>
+        <p class="muted">Accents and plain quotes are typed as <code>us intl</code> dead-key sequences: <code>`</code> + vowel for è, <code>'</code> + <code>e</code> for é, <code>'</code> + Space for <code>'</code>. On a device with a plain US layout, accents come out as <code>`e</code> and quotes get an extra space.</p>
+        <h3 style="margin-top: 2.5mm">Dropped from stock</h3>
+        <p class="muted">Mouse keys (trackpad available), Win+V, Print Screen (mango uses Super+Shift+S), Insert, Pause, Scroll Lock, right Alt, arrow cluster (now on NAV).</p>
       </div>
     </div>
 
@@ -187,25 +208,29 @@ const ROWS = [
 ];
 
 // Legend syntax: "" blank, "A" single, ["shift","base"] stacked,
-// {t: text, tag: "hold tag"}, {icon: glyph, sup}, {held: true}
+// {t: text, tag: "hold tag", accent: true, sticky: true}, {icon: glyph, sup}, {held: true}
 const NF = { bt: "\u{f00af}", btclr: "\u{f00b2}", prev: "\u{f04ae}", next: "\u{f04ad}", play: "\u{f040e}",
              vdn: "\u{f0580}", vup: "\u{f057e}", mute: "\u{f075f}" };
 const H = { held: true };
+const acc = (t, a) => ({ t, tag: a, accent: true });
+const sk = t => ({ t, sticky: true });
 const LAYERS = [
   {
     name: "Layer 0", sub: "BASE",
     keys: [
-      ["Esc","Q","W","E","R","T","Y","U","I","O","P",['"',"'"],"Bksp"],
-      [{t:"Tab",tag:"CTRL"},"A","S","D","F","G","H","J","K","L",[":",";"],{t:"Enter",tag:"CTRL"}],
-      ["Shift","Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
-      ["Alt","Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},"FN","AltGr"],
+      ["Esc","Q","W",acc("E","è"),"R","T","Y",acc("U","ù"),acc("I","ì"),acc("O","ò"),"P",acc("'","é"),"Bksp"],
+      ["Tab",acc("A","à"),"S","D","F","G","H","J","K","L",[":",";"],"Enter"],
+      [sk("Shift"),"Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
+      [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},"Bksp",sk("Alt")],
     ],
     side: [
-      ["chip:CTRL", "<b>Hold for Ctrl</b><br>on Tab and Enter"],
-      ["chip:NUM", "<b>Hold for Layer 1</b><br>right Space"],
-      ["chip:NAV", "<b>Hold for Layer 2</b><br>left Space"],
-      ["FN", "<b>Hold for Layer 3</b>"],
-      ["Super", "<b>Plain key</b>, no hold-tap"],
+      ["accent:è", "<b>Hold for the accent</b><br>à è ì ò ù, and é on <code>'</code>"],
+      ["sticky:1×", "<b>Sticky:</b> tap, then the next key"],
+      ["chip:NUM", "<b>Hold for Layer 1</b>, right Space"],
+      ["chip:NAV", "<b>Hold for Layer 2</b>, left Space"],
+      ["held2", "<b>Both Spaces</b> for Layer 3"],
+      ["'", "<b>Plain apostrophe</b>; Shift gives <code>\"</code>"],
+      ["Super", "<b>Plain key</b>, hold it"],
     ],
   },
   {
@@ -220,20 +245,21 @@ const LAYERS = [
       ["held", "<b>Hold right Space</b>"],
       ["1–0", "<b>Super + number</b><br>switches mango workspace"],
       [". / -", "<b>Pass through</b> for <code>~/</code>, <code>1.5</code>, IPs"],
+      ["` ~ ^", "<b>Plain characters</b>, not dead keys"],
     ],
   },
   {
     name: "Layer 2", sub: "NAV",
     keys: [
       ["","","","","","","Home","PgDn","PgUp","End","","","Del"],
-      ["","Super","Alt","Ctrl","Shift","","←","↓","↑","→","",""],
+      ["",sk("Super"),sk("Alt"),sk("Ctrl"),sk("Shift"),"","←","↓","↑","→","",""],
       ["","","","","","","","","","","",""],
       ["","",H,"","",""],
     ],
     side: [
       ["held", "<b>Hold left Space</b>"],
       ["← ↓ ↑ →", "<b>Arrows on hjkl</b>"],
-      ["Ctrl", "<b>Left home row:</b> plain modifiers for modified arrows"],
+      ["sticky:1×", "<b>Sticky modifiers:</b> tap <code>D</code>, tap <code>L</code> = Ctrl+→"],
       ["Home", "<b>Home, PgDn, PgUp, End</b> sit above the arrows"],
     ],
   },
@@ -244,10 +270,10 @@ const LAYERS = [
       ["Caps",{icon:NF.bt,sup:"1"},{icon:NF.bt,sup:"2"},{icon:NF.bt,sup:"3"},"USB","BLE",
        {icon:NF.prev},{icon:NF.vdn},{icon:NF.vup},{icon:NF.next},{icon:NF.play},{icon:NF.mute}],
       ["",{icon:NF.btclr},"","","","","","","","","",""],
-      ["","","","",H,""],
+      ["","",H,H,"",""],
     ],
     side: [
-      ["held", "<b>Hold FN</b>"],
+      ["held2", "<b>Hold both Spaces</b>"],
       ["icon:" + NF.bt + "<sup>1</sup>", "<b>Select Bluetooth profile 1–3</b>"],
       ["icon:" + NF.btclr, "<b>Clear pairing</b> of the current profile"],
       ["USB", "<b>Switch output</b> to USB or BLE"],
@@ -277,7 +303,10 @@ function face(leg, w) {
   if (Array.isArray(leg)) return `<div class="face stack"><div>${esc(leg[0])}</div><div>${esc(leg[1])}</div></div>`;
   if (leg.held) return `<div class="face center"><span class="held">held</span></div>`;
   if (leg.icon) return `<div class="face center"><span class="icon">${leg.icon}${leg.sup ? `<sup>${leg.sup}</sup>` : ""}</span></div>`;
-  return `<div class="face"><span class="${leg.small ? "small" : ""}">${esc(leg.t)}</span>${leg.tag ? `<span class="chip">${leg.tag}</span>` : ""}</div>`;
+  const small = w <= 1 && leg.t.length >= 5 ? "small" : "";
+  return `<div class="face"><span class="${small}">${esc(leg.t)}</span>` +
+    (leg.tag ? `<span class="chip${leg.accent ? " accent" : ""}">${leg.tag}</span>` : "") +
+    (leg.sticky ? `<span class="sticky">1×</span>` : "") + `</div>`;
 }
 
 function keyboard(layer) {
@@ -295,10 +324,15 @@ function keyboard(layer) {
   return `<div class="kb" style="width:${13*U}mm;height:${4*U}mm">${html}</div>`;
 }
 
+const swatch = `<svg width="3.6mm" height="3mm" viewBox="0 0 3.6 3"><rect x="0.1" y="0.1" width="3.4" height="2.8" rx="0.6" fill="#dcd8d6" stroke="#4a4645" stroke-width="0.16"/></svg>`;
+
 function sideMark(m) {
   if (m.startsWith("chip:")) return `<span class="chip">${m.slice(5)}</span>`;
+  if (m.startsWith("accent:")) return `<span class="chip accent">${m.slice(7)}</span>`;
+  if (m.startsWith("sticky:")) return `<span class="sticky">${m.slice(7)}</span>`;
   if (m.startsWith("icon:")) return `<span style="font-family:'Symbols Nerd Font'">${m.slice(5)}</span>`;
-  if (m === "held") return `<svg width="6mm" height="3.4mm" viewBox="0 0 6 3.4"><rect x="0.1" y="0.1" width="5.8" height="3.2" rx="0.6" fill="#dcd8d6" stroke="#4a4645" stroke-width="0.16"/></svg>`;
+  if (m === "held") return swatch;
+  if (m === "held2") return swatch + " " + swatch;
   return esc(m);
 }
 
