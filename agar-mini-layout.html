@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Agar mini Layout</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #2b2827;
+    --muted: #6f6a68;
+    --line: #4a4645;
+    --band: #cdc8c6;
+    --chip: #a9a3a1;
+    --held: #dcd8d6;
+    --legend-font: "TeX Gyre Adventor", "Noto Sans", "Symbols Nerd Font", sans-serif;
+    --body-font: "Noto Sans", "Symbols Nerd Font", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; color: var(--ink); font-family: var(--body-font); }
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  /* Header band */
+  .band { background: var(--band); height: 30mm; display: flex; align-items: center; padding: 0 12mm; gap: 7mm; }
+  .band.small { height: 18mm; }
+  .brand { font-family: "TeX Gyre Adventor", sans-serif; font-size: 15mm; line-height: 1; color: #f4f1f0;
+           -webkit-text-stroke: 0.25mm #6b6664; letter-spacing: 0.4mm; }
+  .band.small .brand { font-size: 9mm; }
+  .subtitle { font-family: "TeX Gyre Adventor", sans-serif; color: var(--ink); line-height: 1.25; }
+  .subtitle .a { font-size: 4.6mm; }
+  .subtitle .b { font-size: 5.4mm; }
+  .band.small .subtitle .b { font-size: 4.6mm; }
+  .band .corner { margin-left: auto; font-family: "TeX Gyre Adventor", sans-serif; font-size: 2.6mm;
+                  color: var(--muted); text-align: right; letter-spacing: 0.3mm; }
+
+  .content { padding: 5mm 12mm 0; }
+  .tip { text-align: right; font-size: 2.3mm; color: var(--muted); margin-bottom: 1mm; }
+  .tip b { color: var(--ink); }
+
+  /* Layers */
+  .layer { margin-bottom: 6mm; }
+  .layer h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 4.6mm; margin-bottom: 2.2mm; }
+  .layer h2 span { color: var(--muted); font-size: 3.2mm; margin-left: 2mm; }
+  .layer-body { display: flex; gap: 5mm; align-items: flex-start; }
+  .kb { position: relative; flex: none; }
+  .side { flex: 1; font-size: 2.3mm; color: var(--ink); padding-top: 0.5mm; }
+  .side .item { display: flex; gap: 1.6mm; align-items: flex-start; margin-bottom: 2mm; line-height: 1.3; }
+  .side .mark { flex: none; min-width: 7mm; font-family: var(--legend-font); font-size: 2.9mm; text-align: center; }
+  .side .desc { color: var(--muted); }
+  .side .desc b { color: var(--ink); font-weight: 600; }
+
+  /* Keys */
+  .key { position: absolute; }
+  .key svg { position: absolute; inset: 0; overflow: visible; }
+  .face { position: absolute; left: 1.15mm; right: 1.15mm; top: 0.75mm; bottom: 2mm;
+          font-family: var(--legend-font); font-weight: bold; font-size: 2.8mm; line-height: 1.05;
+          padding: 1.1mm 1.35mm; color: var(--ink); }
+  .face .stack div + div { margin-top: 0.15mm; }
+  .face.center { display: flex; align-items: center; justify-content: center; padding: 0; }
+  .face .icon { font-family: "Symbols Nerd Font", sans-serif; font-weight: normal; font-size: 4mm; }
+  .face .icon sup { font-family: var(--legend-font); font-weight: bold; font-size: 1.9mm; vertical-align: 1.2mm; }
+  .face .small { font-size: 2.25mm; }
+  .face .held { font-weight: normal; font-style: italic; font-size: 2.3mm; color: var(--muted); }
+  .chip { position: absolute; left: 0.6mm; bottom: 0.45mm; background: var(--chip); color: #fff;
+          font-family: var(--body-font); font-weight: 600; font-size: 1.55mm; line-height: 1;
+          padding: 0.3mm 0.6mm; border-radius: 0.5mm; letter-spacing: 0.1mm; }
+  .side .chip { position: static; display: inline-block; font-size: 1.9mm; padding: 0.4mm 0.8mm; }
+
+  /* Page 2 */
+  .section { margin-bottom: 6mm; }
+  .section h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 4.8mm; margin-bottom: 2.5mm; }
+  table { width: 100%; border-collapse: collapse; font-size: 2.6mm; }
+  th { text-align: left; font-weight: 600; color: var(--muted); font-size: 2.3mm; text-transform: uppercase;
+       letter-spacing: 0.2mm; border-bottom: 0.3mm solid var(--line); padding: 1.2mm 1.5mm; }
+  td { padding: 1.5mm 1.5mm; border-bottom: 0.15mm solid #d8d4d2; vertical-align: middle; }
+  td.combo { font-family: "DejaVu Sans Mono", monospace; font-size: 2.4mm; color: var(--muted); white-space: nowrap; }
+  td.num { font-variant-numeric: tabular-nums; }
+  kbd { display: inline-block; font-family: var(--legend-font); font-weight: bold; font-size: 2.3mm;
+        border: 0.2mm solid var(--line); border-bottom-width: 0.55mm; border-radius: 0.6mm;
+        padding: 0.25mm 1mm; margin: 0.3mm 0; background: #fff; line-height: 1.2; }
+  .hold { font-size: 2.2mm; color: var(--muted); }
+  .note { font-size: 2.4mm; color: var(--muted); margin-top: 2mm; line-height: 1.45; }
+  .note li { margin-left: 4mm; margin-bottom: 0.8mm; }
+  .note code, .cols code { font-family: "DejaVu Sans Mono", monospace; font-size: 2.2mm; color: var(--ink); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; font-size: 2.5mm; line-height: 1.45; }
+  .cols h3 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 3.8mm; margin-bottom: 1.5mm; }
+  .cols ol, .cols ul { margin-left: 4mm; }
+  .cols li { margin-bottom: 1.2mm; }
+  .cols .muted { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <header class="band">
+    <div class="brand">Agar mini</div>
+    <div class="subtitle"><div class="a">Custom ZMK Layout</div><div class="b">Key Function Manual</div></div>
+    <div class="corner">ZMK FIRMWARE</div>
+  </header>
+  <div class="content">
+    <p class="tip">Quick tip: a key with a <b>grey tag</b> types its legend when tapped and acts as the tag when held. Blank keys pass through to Layer 0.</p>
+    <div id="layers"></div>
+  </div>
+</section>
+
+<section class="page">
+  <header class="band small">
+    <div class="brand">Agar mini</div>
+    <div class="subtitle"><div class="b">Shortcuts &amp; Tuning</div></div>
+    <div class="corner">ZMK FIRMWARE</div>
+  </header>
+  <div class="content" style="padding-top: 7mm">
+
+    <div class="section">
+      <h2>Everyday shortcuts</h2>
+      <table>
+        <thead><tr><th>Action</th><th>Sends</th><th>Keys</th></tr></thead>
+        <tbody>
+          <tr><td>Switch workspace</td><td class="combo">Super+3</td><td><kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Move window to workspace</td><td class="combo">Super+Shift+3</td><td><kbd>Super</kbd> + <kbd>Shift</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Workspaces 6–0</td><td class="combo">Super+6 … Super+0</td><td>Same chord with <kbd>Y</kbd> <kbd>U</kbd> <kbd>I</kbd> <kbd>O</kbd> <kbd>P</kbd>, nothing pinned</td></tr>
+          <tr><td>Terminal / kill / overview</td><td class="combo">Super+Return, Super+q, Super+e</td><td><kbd>Super</kbd> + one key</td></tr>
+          <tr><td>Move / resize window</td><td class="combo">Super+drag</td><td><kbd>Super</kbd> + left or right mouse drag</td></tr>
+          <tr><td>Focus direction</td><td class="combo">Super+Left</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>A</kbd> + <kbd>H</kbd></td></tr>
+          <tr><td>Swap window</td><td class="combo">Super+Shift+Left</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>A</kbd> + <kbd>F</kbd> + <kbd>H</kbd></td></tr>
+          <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><kbd>Alt</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Terminal Ctrl, tmux prefix</td><td class="combo">Ctrl+C, Ctrl+R, Ctrl+P</td><td><span class="hold">hold</span> <kbd>Tab</kbd> + letter</td></tr>
+          <tr><td>Kitty copy / paste</td><td class="combo">Ctrl+Shift+C / V</td><td><span class="hold">hold</span> <kbd>Enter</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> / <kbd>V</kbd></td></tr>
+          <tr><td>Accept fish autosuggestion</td><td class="combo">Right / Ctrl+F</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>L</kbd>, or <span class="hold">hold</span> <kbd>Tab</kbd> + <kbd>F</kbd></td></tr>
+        </tbody>
+      </table>
+      <p class="note">No mango config changes are needed: every chord sends exactly what a full-size keyboard would.</p>
+    </div>
+
+    <div class="section">
+      <h2>Hold-tap tuning</h2>
+      <table>
+        <thead><tr><th>Key</th><th>Flavor</th><th>tapping-term-ms</th><th>quick-tap-ms</th><th>require-prior-idle-ms</th></tr></thead>
+        <tbody>
+          <tr><td>Space / NAV</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td class="num">150</td></tr>
+          <tr><td>Space / NUM</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td>—</td></tr>
+          <tr><td>Tab / Ctrl, Enter / Ctrl</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td class="num">150</td></tr>
+        </tbody>
+      </table>
+      <ul class="note">
+        <li><code>quick-tap-ms</code>: tap then hold repeats the tap key, e.g. hold Space for repeated spaces.</li>
+        <li><code>require-prior-idle-ms</code>: pressed mid-word, the key is a plain tap, which prevents misfires.</li>
+        <li>Space / NUM has no <code>require-prior-idle-ms</code>; otherwise typing <code>port 8080</code> quickly would give letters instead of digits.</li>
+        <li>Super and Alt are plain keys with no hold-tap, so typing can never fire <code>Super+q</code> or <code>Super+n</code>.</li>
+      </ul>
+    </div>
+
+    <div class="cols">
+      <div>
+        <h3>Design</h3>
+        <ol>
+          <li><b>Super is a plain key</b> under the left thumb, on the stock Alt position.</li>
+          <li><b>One layer per thumb.</b> Left Space holds NAV, right Space holds NUM; both type a space when tapped.</li>
+          <li><b>Ctrl on the home row:</b> hold Tab or hold Enter.</li>
+          <li><b>No arrow cluster.</b> Arrows live on hjkl in NAV; the freed keys hold <code>'</code> <code>/</code> <code>-</code>.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Optional extras</h3>
+        <ul>
+          <li><b>Combo J+K = Esc</b>, popular with Helix users.</li>
+          <li><b>xkb variant <code>altgr-intl</code></b>: <code>us intl</code> makes <code>' " ` ~ ^</code> dead keys; <code>altgr-intl</code> keeps accents behind AltGr.</li>
+        </ul>
+        <h3 style="margin-top: 3mm">Dropped from stock</h3>
+        <p class="muted">Mouse keys (trackpad available), Win+V, Print Screen (mango uses Super+Shift+S), Insert, Pause, Scroll Lock.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const U = 11.1;      // mm per key unit
+const GAP = 0.5;     // mm between keys
+
+// Physical geometry: [x offset, widths...] per row (43 keys: 13 / 12 / 12 / 6)
+const ROWS = [
+  { x: 0,    w: [1,1,1,1,1,1,1,1,1,1,1,1,1] },
+  { x: 0,    w: [1.25,1,1,1,1,1,1,1,1,1,1,1.75] },
+  { x: 0,    w: [1.75,1,1,1,1,1,1,1,1,1,1,1.25] },
+  { x: 1.25, w: [1,1.25,3,3.25,1,1] },
+];
+
+// Legend syntax: "" blank, "A" single, ["shift","base"] stacked,
+// {t: text, tag: "hold tag"}, {icon: glyph, sup}, {held: true}
+const NF = { bt: "\u{f00af}", btclr: "\u{f00b2}", prev: "\u{f04ae}", next: "\u{f04ad}", play: "\u{f040e}",
+             vdn: "\u{f0580}", vup: "\u{f057e}", mute: "\u{f075f}" };
+const H = { held: true };
+const LAYERS = [
+  {
+    name: "Layer 0", sub: "BASE",
+    keys: [
+      ["Esc","Q","W","E","R","T","Y","U","I","O","P",['"',"'"],"Bksp"],
+      [{t:"Tab",tag:"CTRL"},"A","S","D","F","G","H","J","K","L",[":",";"],{t:"Enter",tag:"CTRL"}],
+      ["Shift","Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
+      ["Alt","Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},"FN","AltGr"],
+    ],
+    side: [
+      ["chip:CTRL", "<b>Hold for Ctrl</b><br>on Tab and Enter"],
+      ["chip:NUM", "<b>Hold for Layer 1</b><br>right Space"],
+      ["chip:NAV", "<b>Hold for Layer 2</b><br>left Space"],
+      ["FN", "<b>Hold for Layer 3</b>"],
+      ["Super", "<b>Plain key</b>, no hold-tap"],
+    ],
+  },
+  {
+    name: "Layer 1", sub: "NUM",
+    keys: [
+      [["~","`"],["!","1"],["@","2"],["#","3"],["$","4"],["%","5"],["^","6"],["&","7"],["*","8"],["(","9"],[")","0"],["+","="],"Del"],
+      ["","~","|","\\","[","{","}","]","(",")","_",""],
+      ["","!","@","#","$","%","^","&","*","","",""],
+      ["","","",H,"",""],
+    ],
+    side: [
+      ["held", "<b>Hold right Space</b>"],
+      ["1–0", "<b>Super + number</b><br>switches mango workspace"],
+      [". / -", "<b>Pass through</b> for <code>~/</code>, <code>1.5</code>, IPs"],
+    ],
+  },
+  {
+    name: "Layer 2", sub: "NAV",
+    keys: [
+      ["","","","","","","Home","PgDn","PgUp","End","","","Del"],
+      ["","Super","Alt","Ctrl","Shift","","←","↓","↑","→","",""],
+      ["","","","","","","","","","","",""],
+      ["","",H,"","",""],
+    ],
+    side: [
+      ["held", "<b>Hold left Space</b>"],
+      ["← ↓ ↑ →", "<b>Arrows on hjkl</b>"],
+      ["Ctrl", "<b>Left home row:</b> plain modifiers for modified arrows"],
+      ["Home", "<b>Home, PgDn, PgUp, End</b> sit above the arrows"],
+    ],
+  },
+  {
+    name: "Layer 3", sub: "FN",
+    keys: [
+      ["Boot","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"],
+      ["Caps",{icon:NF.bt,sup:"1"},{icon:NF.bt,sup:"2"},{icon:NF.bt,sup:"3"},"USB","BLE",
+       {icon:NF.prev},{icon:NF.vdn},{icon:NF.vup},{icon:NF.next},{icon:NF.play},{icon:NF.mute}],
+      ["",{icon:NF.btclr},"","","","","","","","","",""],
+      ["","","","",H,""],
+    ],
+    side: [
+      ["held", "<b>Hold FN</b>"],
+      ["icon:" + NF.bt + "<sup>1</sup>", "<b>Select Bluetooth profile 1–3</b>"],
+      ["icon:" + NF.btclr, "<b>Clear pairing</b> of the current profile"],
+      ["USB", "<b>Switch output</b> to USB or BLE"],
+      ["Boot", "<b>Bootloader</b> for flashing"],
+      ["icon:" + NF.prev + " " + NF.play + " " + NF.next, "<b>Media</b> previous, play/pause, next"],
+      ["icon:" + NF.vdn + " " + NF.vup + " " + NF.mute, "<b>Volume</b> down, up, mute"],
+    ],
+  },
+];
+
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function keySvg(w, h, held) {
+  const o = 0.15, ix = 1.15, top = 0.75, bot = 2;
+  return `<svg width="${w}mm" height="${h}mm" viewBox="0 0 ${w} ${h}">
+    <g fill="none" stroke="#4a4645" stroke-width="0.16" stroke-linejoin="round">
+      <rect x="${o}" y="${o}" width="${w-2*o}" height="${h-2*o}" rx="1.1" fill="#fff"/>
+      <rect x="${ix}" y="${top}" width="${w-2*ix}" height="${h-top-bot}" rx="0.9" fill="${held ? "#dcd8d6" : "#fff"}"/>
+      <path d="M${o+0.35} ${o+0.35}L${ix+0.25} ${top+0.25}M${w-o-0.35} ${o+0.35}L${w-ix-0.25} ${top+0.25}
+               M${o+0.35} ${h-o-0.35}L${ix+0.25} ${h-bot-0.25}M${w-o-0.35} ${h-o-0.35}L${w-ix-0.25} ${h-bot-0.25}"/>
+    </g></svg>`;
+}
+
+function face(leg, w) {
+  if (leg === "") return "";
+  if (typeof leg === "string") return `<div class="face"><span class="${w <= 1 && leg.length >= 5 ? "small" : ""}">${esc(leg)}</span></div>`;
+  if (Array.isArray(leg)) return `<div class="face stack"><div>${esc(leg[0])}</div><div>${esc(leg[1])}</div></div>`;
+  if (leg.held) return `<div class="face center"><span class="held">held</span></div>`;
+  if (leg.icon) return `<div class="face center"><span class="icon">${leg.icon}${leg.sup ? `<sup>${leg.sup}</sup>` : ""}</span></div>`;
+  return `<div class="face"><span class="${leg.small ? "small" : ""}">${esc(leg.t)}</span>${leg.tag ? `<span class="chip">${leg.tag}</span>` : ""}</div>`;
+}
+
+function keyboard(layer) {
+  let html = "";
+  ROWS.forEach((row, r) => {
+    let x = row.x;
+    row.w.forEach((w, c) => {
+      const leg = layer.keys[r][c];
+      const wmm = w * U - GAP, hmm = U - GAP;
+      html += `<div class="key" style="left:${x*U}mm;top:${r*U}mm;width:${wmm}mm;height:${hmm}mm">
+                 ${keySvg(wmm, hmm, leg && leg.held)}${face(leg, w)}</div>`;
+      x += w;
+    });
+  });
+  return `<div class="kb" style="width:${13*U}mm;height:${4*U}mm">${html}</div>`;
+}
+
+function sideMark(m) {
+  if (m.startsWith("chip:")) return `<span class="chip">${m.slice(5)}</span>`;
+  if (m.startsWith("icon:")) return `<span style="font-family:'Symbols Nerd Font'">${m.slice(5)}</span>`;
+  if (m === "held") return `<svg width="6mm" height="3.4mm" viewBox="0 0 6 3.4"><rect x="0.1" y="0.1" width="5.8" height="3.2" rx="0.6" fill="#dcd8d6" stroke="#4a4645" stroke-width="0.16"/></svg>`;
+  return esc(m);
+}
+
+document.getElementById("layers").innerHTML = LAYERS.map(l => `
+  <div class="layer">
+    <h2>${l.name}<span>${l.sub}</span></h2>
+    <div class="layer-body">
+      ${keyboard(l)}
+      <div class="side">${l.side.map(([m, d]) =>
+        `<div class="item"><span class="mark">${sideMark(m)}</span><span class="desc">${d}</span></div>`).join("")}</div>
+    </div>
+  </div>`).join("");
+</script>
+</body>
+</html>
