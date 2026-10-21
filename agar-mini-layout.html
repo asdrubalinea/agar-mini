@@ -129,12 +129,12 @@
           <tr><td>è à ì ò ù</td><td class="combo"></td><td><span class="hold">hold</span> the vowel</td></tr>
           <tr><td>é</td><td class="combo"></td><td><span class="hold">hold</span> <kbd>'</kbd></td></tr>
           <tr><td>È</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="hold">hold</span> <kbd>E</kbd></td></tr>
-          <tr><td>Capital letter</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> the letter</td></tr>
+          <tr><td>Capital letter</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd> <span class="tap">(right thumb)</span>, <span class="tap">tap</span> the letter</td></tr>
           <tr><td>Apostrophe / quote</td><td class="combo">' / "</td><td><span class="tap">tap</span> <kbd>'</kbd> &nbsp;/&nbsp; <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>'</kbd></td></tr>
           <tr><td>Newline in Claude Code</td><td class="combo">Shift+Enter</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>Enter</kbd></td></tr>
           <tr><td>Question / exclamation mark</td><td class="combo">? / !</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>/</kbd> &nbsp;/&nbsp; <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Z</kbd></td></tr>
           <tr><td>Number</td><td class="combo">1 … 0</td><td><span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Q</kbd> … <kbd>P</kbd></td></tr>
-          <tr><td>Backspace</td><td class="combo"></td><td>right thumb, the key right of <kbd>R Space</kbd></td></tr>
+          <tr><td>Backspace</td><td class="combo"></td><td>top-right corner, as on the Q4</td></tr>
           <tr><td>Copy / paste</td><td class="combo">Ctrl+C / Ctrl+V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
           <tr><td>Kitty copy / paste</td><td class="combo">Ctrl+Shift+C / V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
           <tr><td>Switch workspace</td><td class="combo">Super+3</td><td><span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
@@ -181,7 +181,7 @@
           <li><b>Long-press vowels</b> for Italian accents, like a phone keyboard.</li>
           <li><b>Sticky Shift, Ctrl and Alt:</b> tap, then the next key.</li>
           <li><b><code>'</code> and <code>"</code> are always plain</b>, despite <code>us intl</code> dead keys.</li>
-          <li><b>Super under the left thumb, Backspace under the right.</b></li>
+          <li><b>Super under the left thumb, a second Shift under the right.</b> Backspace stays top-right.</li>
         </ol>
       </div>
       <div>
@@ -221,7 +221,7 @@ const LAYERS = [
       ["Esc","Q","W",acc("E","è"),"R","T","Y",acc("U","ù"),acc("I","ì"),acc("O","ò"),"P",acc("'","é"),"Bksp"],
       ["Tab",acc("A","à"),"S","D","F","G","H","J","K","L",[":",";"],"Enter"],
       [sk("Shift"),"Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
-      [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},"Bksp",sk("Alt")],
+      [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},sk("Shift"),sk("Alt")],
     ],
     side: [
       ["accent:è", "<b>Hold for the accent</b><br>à è ì ò ù, and é on <code>'</code>"],

@@ -12,7 +12,8 @@ mangowm as window manager (Super for everything, workspaces 1–0).
 2. **Long-press vowels for Italian accents**, like a phone keyboard: hold `e` → è.
 3. **Sticky modifiers.** Shift, Ctrl and Alt are tapped, then the next key is tapped.
 4. **`'` and `"` always type plain characters**, even though the computer uses `us intl` dead keys.
-5. **Super is a plain key under the left thumb; Backspace is under the right thumb.**
+5. **Super under the left thumb, a second sticky Shift under the right thumb.**
+   Backspace stays top-right, as on the Q4.
 
 ## Physical layout
 
@@ -28,7 +29,7 @@ Legend: `·` = same as base. `(x)` = what the key gives when held. `1×` = stick
 Esc    Q    W    E(è) R    T    Y    U(ù) I(ì) O(ò) P    '(é) Bksp
 Tab    A(à) S    D    F    G    H    J    K    L    ;    Enter
 Shift1× Z   X    C    V    B    N    M    ,    .    /    -
-       Ctrl1× Super [Space/NAV]  [Space/NUM]  Bksp  Alt1×
+       Ctrl1× Super [Space/NAV]  [Space/NUM]  Shift1× Alt1×
 ```
 
 - Vowels: tap = letter, hold = accented letter. Shift first gives the capital (È).
@@ -37,7 +38,8 @@ Shift1× Z   X    C    V    B    N    M    ,    .    /    -
 - `Super`: plain key, no hold behaviour.
 - `Space/NAV` (left thumb): tap = Space, hold = NAV.
 - `Space/NUM` (right thumb): tap = Space, hold = NUM.
-- `Bksp` (stock ← key, right thumb): plain Backspace, holding it repeats.
+- `Shift` (stock ← key, right thumb): a second sticky Shift, for capitals, `?`, `"`, È and
+  Shift+Enter without moving the left hand.
 - Hold both Spaces for FN.
 
 ### Layer 1 — NUM (hold right Space)
@@ -85,13 +87,13 @@ Caps   BT1  BT2  BT3  USB  BLE  Prev Vol- Vol+ Next Play Mute
 | è à ì ò ù | | hold the vowel |
 | é | | hold `'` |
 | È | | tap Shift, hold `E` |
-| Capital letter | | tap Shift, tap letter |
+| Capital letter | | tap Shift (right thumb), tap letter |
 | Apostrophe / quote | `'` / `"` | tap `'` / tap Shift, tap `'` |
 | Newline in Claude Code | `Shift+Enter` | tap Shift, tap Enter |
 | `?` | | tap Shift, tap `/` |
 | `!` | | hold right Space, tap `Z` |
 | Number | | hold right Space, tap the key above it (`Q` = 1 … `P` = 0) |
-| Backspace | | right thumb, next to the right Space |
+| Backspace | | top-right corner, as on the Q4 |
 | Copy / paste | `Ctrl+C` / `Ctrl+V` | tap Ctrl, tap `C` / `V` |
 | Kitty copy / paste | `Ctrl+Shift+C/V` | tap Ctrl, tap Shift, tap `C` / `V` |
 | Switch workspace | `Super+3` | hold Super + hold right Space + tap `E` |
