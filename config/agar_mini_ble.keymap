@@ -1,0 +1,163 @@
+/*
+ * Agar mini custom layout. See agar-mini-layout.md for the design.
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "./boards/shields/klink_kbd/common.keymap"
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#define BASE 0
+#define NUM  1
+#define NAV  2
+#define FN   3
+
+#define SHIFTS (MOD_LSFT|MOD_RSFT)
+
+// The computer uses xkb `us intl`, where ' " ` ~ ^ are dead keys.
+// Plain characters are sent as dead key + Space, accents as dead key + letter.
+#define LITERAL(name, key) ZMK_MACRO(name, bindings = <&kp key &kp SPACE>;)
+#define DEAD(name, dead, letter) ZMK_MACRO(name, bindings = <&kp dead &kp letter>;)
+
+#define MORPH(name, normal, shifted) \
+    name: name { \
+        compatible = "zmk,behavior-mod-morph"; \
+        #binding-cells = <0>; \
+        bindings = <normal>, <shifted>; \
+        mods = <SHIFTS>; \
+    };
+
+// Tap for the letter, hold for the accented letter (Shift first for the capital)
+#define LONGPRESS(name, hold) \
+    name: name { \
+        compatible = "zmk,behavior-hold-tap"; \
+        #binding-cells = <2>; \
+        flavor = "tap-preferred"; \
+        tapping-term-ms = <250>; \
+        bindings = <hold>, <&kp>; \
+    };
+
+#define ACCENT(v, dead, letter) \
+    DEAD(v##_lo, dead, letter) \
+    DEAD(v##_up, dead, LS(letter)) \
+    MORPH(v##_mm, &v##_lo, &v##_up) \
+    LONGPRESS(v, &v##_mm)
+
+&sk {
+    release-after-ms = <1500>;
+    quick-release;
+};
+
+/ {
+    macros {
+        LITERAL(lit_apos, SQT)
+        LITERAL(lit_dquote, DQT)
+        LITERAL(lit_grave, GRAVE)
+        LITERAL(lit_tilde, TILDE)
+        LITERAL(lit_caret, CARET)
+    };
+
+    behaviors {
+        ACCENT(acc_a, GRAVE, A)
+        ACCENT(acc_e, GRAVE, E)
+        ACCENT(acc_i, GRAVE, I)
+        ACCENT(acc_o, GRAVE, O)
+        ACCENT(acc_u, GRAVE, U)
+
+        // ' key: tap = ' (Shift: "), hold = é (Shift: É)
+        DEAD(eacute_lo, SQT, E)
+        DEAD(eacute_up, SQT, LS(E))
+        MORPH(eacute_mm, &eacute_lo, &eacute_up)
+        MORPH(quote_mm, &lit_apos, &lit_dquote)
+        acc_apos: acc_apos {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <250>;
+            bindings = <&eacute_mm>, <&quote_mm>;
+        };
+
+        // NUM layer: ` (Shift: ~) and 6 (Shift: ^) without dead keys
+        MORPH(grave_mm, &lit_grave, &lit_tilde)
+        MORPH(six_mm, &kp N6, &lit_caret)
+
+        spc_nav: space_nav {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            bindings = <&mo>, <&kp>;
+        };
+
+        spc_num: space_num {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            bindings = <&mo>, <&kp>;
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        fn_layer {
+            if-layers = <NUM NAV>;
+            then-layer = <FN>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            display-name = "Base";
+            bindings = <
+&kp ESC     &kp Q        &kp W     &acc_e 0 E  &kp R  &kp T  &kp Y  &acc_u 0 U  &acc_i 0 I  &acc_o 0 O  &kp P      &acc_apos 0 0  &kp BSPC
+&kp TAB     &acc_a 0 A   &kp S     &kp D       &kp F  &kp G  &kp H  &kp J       &kp K       &kp L       &kp SEMI   &kp RET
+&sk LSHFT   &kp Z        &kp X     &kp C       &kp V  &kp B  &kp N  &kp M       &kp COMMA   &kp DOT     &kp FSLH   &kp MINUS
+            &sk LCTRL    &kp LGUI              &spc_nav NAV SPACE   &spc_num NUM SPACE                  &sk LSHFT  &kp UP
+            >;
+        };
+
+        num_layer {
+            display-name = "Num";
+            bindings = <
+&grave_mm  &kp N1    &kp N2  &kp N3    &kp N4    &kp N5     &six_mm     &kp N7    &kp N8    &kp N9    &kp N0     &kp EQUAL  &kp DEL
+&trans     &lit_tilde &kp PIPE &kp BSLH &kp LBKT  &kp LBRC   &kp RBRC    &kp RBKT  &kp LPAR  &kp RPAR  &kp UNDER  &trans
+&trans     &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT  &lit_caret  &kp AMPS  &kp STAR  &trans    &trans     &trans
+           &trans    &trans                      &trans                 &trans                        &trans     &trans
+            >;
+        };
+
+        nav_layer {
+            display-name = "Nav";
+            bindings = <
+&trans  &trans     &trans     &trans      &trans      &trans  &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &trans  &trans  &kp DEL
+&trans  &sk LGUI   &sk LALT   &sk LCTRL   &sk LSHFT   &trans  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans  &trans
+&trans  &trans     &trans     &trans      &trans      &trans  &trans    &trans     &trans     &trans     &trans  &trans
+        &trans     &trans                 &trans                        &trans                           &trans  &trans
+            >;
+        };
+
+        fn_layer {
+            display-name = "Fn";
+            bindings = <
+&bootloader_reset 0 0  &kp F1           &kp F2           &kp F3           &kp F4       &kp F5        &kp F6      &kp F7        &kp F8        &kp F9      &kp F10   &kp F11  &kp F12
+&kp CAPS               &device_bt1 0 0  &device_bt2 0 1  &device_bt3 0 2  &Device_USB  &out OUT_BLE  &kp C_PREV  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_NEXT  &kp C_PP  &kp C_MUTE
+&trans                 &trans           &trans           &trans           &trans       &trans        &trans      &trans        &trans        &trans      &trans    &trans
+                       &trans           &trans                            &trans                     &trans                                  &trans      &trans
+            >;
+        };
+
+        layer4 { status = "reserved"; };
+        layer5 { status = "reserved"; };
+        layer6 { status = "reserved"; };
+        layer7 { status = "reserved"; };
+    };
+};

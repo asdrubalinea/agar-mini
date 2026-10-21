@@ -9,7 +9,6 @@
 #define ZMK_BEHAVIORS_OMIT_CAPS_WORD        // &caps_word
 #define ZMK_BEHAVIORS_OMIT_KT               // &kt, Key Toggle
 #define ZMK_BEHAVIORS_OMIT_KEY_REPEAT       // &key_repeat, Key Repeat
-#define ZMK_BEHAVIORS_OMIT_SK               // &sk, Sticky Key
 #define ZMK_BEHAVIORS_OMIT_STICKY_LAYER     // &sl, Sticky Layer
 #endif
 
