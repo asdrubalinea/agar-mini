@@ -32,10 +32,12 @@
             -e "s|pkg_resources.resource_filename('grpc_tools', '_proto')|str(importlib.resources.files('grpc_tools') / '_proto')|" \
             ../modules/lib/nanopb/generator/proto/{__init__,_utils}.py
 
-          # hog.h guards the mouse report prototype with the old CONFIG_ZMK_MOUSE
-          # name; GCC 15 rejects the resulting implicit declaration.
-          sed -i 's/^#if IS_ENABLED(CONFIG_ZMK_MOUSE)$/#if IS_ENABLED(CONFIG_ZMK_POINTING)/' \
-            ../zmk/app/include/zmk/hog.h
+          # hog.h and hog.c still test the old CONFIG_ZMK_MOUSE name. In hog.h
+          # that hides the mouse report prototype, which GCC 15 rejects; in
+          # hog.c it miscounts the Bluetooth HID attributes, so power/sleep
+          # keys are sent to the wrong attribute.
+          sed -i 's/IS_ENABLED(CONFIG_ZMK_MOUSE)/IS_ENABLED(CONFIG_ZMK_POINTING)/' \
+            ../zmk/app/include/zmk/hog.h ../zmk/app/src/hog.c
         '';
 
         zephyrDepsHash = "sha256-AlK6foSeozV6mMDEFRRWVlCVnqw5bF9g03ryjMQ/ffw=";

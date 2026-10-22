@@ -33,6 +33,7 @@ Shift1× Z   X    C    V    B    N    M    ,    .    /    -
 ```
 
 - Vowels: tap = letter, hold = accented letter. Shift first gives the capital (È).
+  With Ctrl, Alt or Super active, holding gives the plain letter, so shortcuts still work.
 - `'`: tap = plain apostrophe, hold = é. Shift + `'` = plain `"`.
 - `Shift`, `Ctrl`: sticky. Tap, then the next key. They can also be held normally.
 - `Super`: plain key, no hold behaviour.
@@ -170,6 +171,11 @@ on yangdigi's ZMK fork and `klink` board, with ZMK Studio enabled.
 
 Changes to KBDfans' files: sticky keys re-enabled in `common.keymap` (KBDfans omits them),
 and two status-light callbacks in `klink_indicator.c` now return a value as ZMK expects.
+The keymap also drops KBDfans' diagnostic combo (Q + the key right of P), which sat on `'`.
+
+The flake patches the fork at build time: nanopb no longer imports `pkg_resources`, and
+`hog.h`/`hog.c` test `CONFIG_ZMK_POINTING` instead of the stale `CONFIG_ZMK_MOUSE`
+(the `hog.c` one sent Bluetooth power/sleep keys to the wrong HID attribute).
 
 ### Build
 
@@ -194,7 +200,8 @@ To go back to stock, flash KBDfans' `agar_mini-klink-zmk.uf2` from the
 
 ### Implementation notes
 
-- Vowels: hold-tap (tap-preferred, 250 ms). Tap `&kp E`; hold = mod-morph between two macros
+- Vowels: hold-tap (tap-preferred, 250 ms). Tap `&kp E`; hold = mod-morph that sends `&kp E`
+  when Ctrl/Alt/Super is active (mods kept), otherwise a mod-morph between two macros
   (`` ` `` E and `` ` `` Shift+E).
 - `'`: hold-tap. Tap = mod-morph (`'` Space / Shift+`'` Space); hold = mod-morph (`'` E / `'` Shift+E).
 - Sticky modifiers: `&sk` with `release-after-ms = 1500` and `quick-release`.

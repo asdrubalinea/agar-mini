@@ -16,6 +16,7 @@
 #define FN   3
 
 #define SHIFTS (MOD_LSFT|MOD_RSFT)
+#define SHORTCUT_MODS (MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LGUI|MOD_RGUI)
 
 // The computer uses xkb `us intl`, where ' " ` ~ ^ are dead keys.
 // Plain characters are sent as dead key + Space, accents as dead key + letter.
@@ -40,11 +41,23 @@
         bindings = <hold>, <&kp>; \
     };
 
+// With Ctrl, Alt or Super active, send `plain` with those mods kept, so a slow
+// press still works as a shortcut (Ctrl+A, Super+E, ...)
+#define UNLESS_SHORTCUT(name, accented, plain) \
+    name: name { \
+        compatible = "zmk,behavior-mod-morph"; \
+        #binding-cells = <0>; \
+        bindings = <accented>, <plain>; \
+        mods = <SHORTCUT_MODS>; \
+        keep-mods = <SHORTCUT_MODS>; \
+    };
+
 #define ACCENT(v, dead, letter) \
     DEAD(v##_lo, dead, letter) \
     DEAD(v##_up, dead, LS(letter)) \
     MORPH(v##_mm, &v##_lo, &v##_up) \
-    LONGPRESS(v, &v##_mm)
+    UNLESS_SHORTCUT(v##_hold, &v##_mm, &kp letter) \
+    LONGPRESS(v, &v##_hold)
 
 &sk {
     release-after-ms = <1500>;
@@ -72,12 +85,14 @@
         DEAD(eacute_up, SQT, LS(E))
         MORPH(eacute_mm, &eacute_lo, &eacute_up)
         MORPH(quote_mm, &lit_apos, &lit_dquote)
+        UNLESS_SHORTCUT(eacute_hold, &eacute_mm, &kp SQT)
+        UNLESS_SHORTCUT(quote_tap, &quote_mm, &kp SQT)
         acc_apos: acc_apos {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <250>;
-            bindings = <&eacute_mm>, <&quote_mm>;
+            bindings = <&eacute_hold>, <&quote_tap>;
         };
 
         // NUM layer: ` (Shift: ~) and 6 (Shift: ^) without dead keys
@@ -103,6 +118,11 @@
             bindings = <&mo>, <&kp>;
         };
     };
+
+    // KBDfans' only combo is a diagnostic (Q + the key right of P) that sits
+    // on our ' key. Drop the whole node: an empty one leaves ZMK's combo code
+    // with zero-length arrays.
+    /delete-node/ combos;
 
     conditional_layers {
         compatible = "zmk,conditional-layers";
