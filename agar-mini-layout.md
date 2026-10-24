@@ -158,24 +158,31 @@ The single RGB light comes from KBDfans' indicator code and is unchanged:
 
 ## Firmware
 
-The firmware is ZMK, built from KBDfans' own config for the dual-mode Agar mini
-([openkbd/zmk-config-agar-mini-ble](https://github.com/openkbd/zmk-config-agar-mini-ble)),
-on yangdigi's ZMK fork and `klink` board, with ZMK Studio enabled.
+The firmware is official [ZMK](https://zmk.dev) (main, on Zephyr 4.1), built with Nix.
+The Agar mini isn't in ZMK itself, so this repo carries its description, ported from KBDfans'
+own config ([openkbd/zmk-config-agar-mini-ble](https://github.com/openkbd/zmk-config-agar-mini-ble))
+and board ([yangdigi/zmk-keyboards-klink](https://github.com/yangdigi/zmk-keyboards-klink)).
 
 | File | What it is |
 |---|---|
 | `config/agar_mini_ble.keymap` | This layout |
-| `config/boards/shields/klink_kbd/` | KBDfans' shield: matrix, physical layout, status light, stock keymap |
-| `config/west.yml` | ZMK fork and board, pinned to exact commits |
+| `config/device_keys.dtsi` | Bluetooth slot, USB and reset keys, as on the stock firmware |
+| `config/west.yml` | ZMK and Zephyr, pinned to exact commits |
+| `boards/kbdfans/klink/` | The controller board (nRF52840) |
+| `boards/shields/agar_mini/` | Key matrix, physical layouts, settings, status-light code |
 | `flake.nix` | Nix build via [zmk-nix](https://github.com/lilyinstarlight/zmk-nix) |
 
-Changes to KBDfans' files: sticky keys re-enabled in `common.keymap` (KBDfans omits them),
-and two status-light callbacks in `klink_indicator.c` now return a value as ZMK expects.
-The keymap also drops KBDfans' diagnostic combo (Q + the key right of P), which sat on `'`.
+What changed from KBDfans' files:
 
-The flake patches the fork at build time: nanopb no longer imports `pkg_resources`, and
-`hog.h`/`hog.c` test `CONFIG_ZMK_POINTING` instead of the stale `CONFIG_ZMK_MOUSE`
-(the `hog.c` one sent Bluetooth power/sleep keys to the wrong HID attribute).
+- The board is ported to the current Zephyr board format. Pins and flash layout are unchanged,
+  so KBDfans' bootloader accepts the firmware.
+- The shield drops an RGB strip the board doesn't have, and the keymap drops KBDfans' unused
+  mouse keys, mod-taps and diagnostic combo (Q + the key right of P, which sat on `'`).
+- The status-light code follows ZMK's current API, no longer hides key presses from other
+  ZMK features, and keeps working if an unexpected Bluetooth slot is selected.
+
+Nothing is patched at build time, and nothing is a prebuilt binary: the ARM compiler is built
+from source by Nix for the nRF52840's Cortex-M4.
 
 ### Build
 
@@ -183,8 +190,11 @@ The flake patches the fork at build time: nanopb no longer imports `pkg_resource
 nix build
 ```
 
-The firmware lands in `result/zmk.uf2`. After changing `config/west.yml`, run `nix run .#update`
-to refresh the dependency hash.
+The firmware lands in `result/zmk.uf2`. `nix build --rebuild` builds it again and fails if
+the result isn't byte-identical.
+
+To update ZMK, change the commits in `config/west.yml`, then run `nix run .#update`
+(or set `zephyrDepsHash` to `nixpkgs.lib.fakeHash` and copy the hash from the error).
 
 ### Flash
 
@@ -194,6 +204,11 @@ to refresh the dependency hash.
    - From the stock KBDfans firmware: hold the stock → key (layer 3) and hold `B` for 3 seconds.
      That's where KBDfans' source puts it; if nothing happens, their published file may differ.
 3. Run `nix run .#flash` (or copy `result/zmk.uf2` onto the drive). The keyboard restarts with the new layout.
+
+Bluetooth pairings live in a separate part of the flash and normally survive a flash. If
+Bluetooth misbehaves after switching firmware, wipe the stored settings: build
+`nix build .#settings-reset`, flash its `zmk.uf2` the same way, then flash the firmware
+again and re-pair your devices.
 
 To go back to stock, flash KBDfans' `agar_mini-klink-zmk.uf2` from the
 [product page](https://kbdfans.com/products/agar-mini) the same way.
