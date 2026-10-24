@@ -1,11 +1,10 @@
-identifier: klink
+identifier: klink/nrf52840/zmk
 name: klink
 type: mcu
 arch: arm
 toolchain:
   - zephyr
   - gnuarmemb
-  - xtools
 supported:
   - adc
   - usb_device

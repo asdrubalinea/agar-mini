@@ -1,5 +1,5 @@
 file_format: "1"
-id: klink
+id: klink//zmk
 name: klink
 type: board
 arch: arm

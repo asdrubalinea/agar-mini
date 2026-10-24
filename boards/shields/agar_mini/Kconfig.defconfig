@@ -1,11 +1,13 @@
 # Copyright (c) 2020 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-# all use the same settings. remove #if
+if SHIELD_AGAR_MINI_BLE
 
 config ZMK_KEYBOARD_NAME
     default "agar_mini_ble"
 
+# The status light is three plain GPIO LEDs
 config LED
     default y
 
+endif # SHIELD_AGAR_MINI_BLE

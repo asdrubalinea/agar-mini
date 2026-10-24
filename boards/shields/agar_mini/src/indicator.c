@@ -120,7 +120,7 @@ static int usb_conn_state_update_cb(const zmk_event_t *eh) {
 
     if (ev != NULL && ev->conn_state == ZMK_USB_CONN_HID) {
         LOG_DBG("USB HID connected, switch preferred endpoint to USB");
-        zmk_endpoints_select_transport(ZMK_TRANSPORT_USB);
+        zmk_endpoint_set_preferred_transport(ZMK_TRANSPORT_USB);
     }
 
     return ZMK_EV_EVENT_BUBBLE;
@@ -137,7 +137,8 @@ static int zmk_handle_keycode_user(struct zmk_keycode_state_changed *event) {
     if (key == 0xAB) {
         ble_active_profile_update();
     }
-    return ZMK_EV_EVENT_HANDLED;
+    // Let every other listener see the key too
+    return ZMK_EV_EVENT_BUBBLE;
 }
 
 static int keycode_user_listener(const zmk_event_t *eh) {
@@ -149,7 +150,7 @@ static int keycode_user_listener(const zmk_event_t *eh) {
         return zmk_handle_keycode_user(kc_state);
     }
 
-    return 0;
+    return ZMK_EV_EVENT_BUBBLE;
 }
 
 ZMK_LISTENER(keycode_user, keycode_user_listener);
@@ -230,7 +231,9 @@ void led_process_thread(void) {
         if (indicator_state.connection > 0) {
             static uint8_t profile_color_bits[3]= {0b011, 0b110, 0b101};
             if (indicator_state.active_device >= 3) {
-                return;
+                // No colour for slots past 3: stop the animation, keep the thread
+                indicator_state.connection = 0;
+                continue;
             }
 
             if ((led_timer_steps & 0xf) == 0xf) {

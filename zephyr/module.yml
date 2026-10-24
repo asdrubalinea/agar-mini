@@ -1,3 +1,5 @@
+name: agar-mini
 build:
+  cmake: .
   settings:
     board_root: .

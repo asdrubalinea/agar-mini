@@ -1,0 +1,65 @@
+/*
+ * Device keys, kept from KBDfans' stock common.keymap so they behave the same:
+ *
+ *   &device_bt1..3  tap: use Bluetooth slot 1-3; hold 3 s: forget that slot's pairing
+ *   &Device_USB     send keys over USB
+ *   &bootloader_reset  tap: restart; hold 3 s: enter the bootloader (for flashing)
+ *
+ * SHOW_LED is a reserved HID usage the status-light code listens for, so the
+ * light shows the slot even when the slot didn't change. Hosts ignore it.
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#define SHOW_LED 0xAB
+
+/ {
+    macros {
+        ZMK_MACRO(Device_USB, bindings = <&out OUT_USB>;)
+
+        ZMK_MACRO(bt_clear_0, bindings = <&bt BT_SEL 0>, <&bt BT_CLR>, <&kp SHOW_LED>;)
+        ZMK_MACRO(bt_clear_1, bindings = <&bt BT_SEL 1>, <&bt BT_CLR>, <&kp SHOW_LED>;)
+        ZMK_MACRO(bt_clear_2, bindings = <&bt BT_SEL 2>, <&bt BT_CLR>, <&kp SHOW_LED>;)
+        ZMK_MACRO(bt_conn_0,  bindings = <&out OUT_BLE>, <&bt BT_SEL 0>, <&kp SHOW_LED>;)
+        ZMK_MACRO(bt_conn_1,  bindings = <&out OUT_BLE>, <&bt BT_SEL 1>, <&kp SHOW_LED>;)
+        ZMK_MACRO(bt_conn_2,  bindings = <&out OUT_BLE>, <&bt BT_SEL 2>, <&kp SHOW_LED>;)
+    };
+
+    behaviors {
+        device_bt1: device_bt1 {
+            compatible = "zmk,behavior-hold-tap";
+            display-name = "Device BT1";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <3000>;
+            bindings = <&bt_clear_0>, <&bt_conn_0>;
+        };
+
+        device_bt2: device_bt2 {
+            compatible = "zmk,behavior-hold-tap";
+            display-name = "Device BT2";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <3000>;
+            bindings = <&bt_clear_1>, <&bt_conn_1>;
+        };
+
+        device_bt3: device_bt3 {
+            compatible = "zmk,behavior-hold-tap";
+            display-name = "Device BT3";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <3000>;
+            bindings = <&bt_clear_2>, <&bt_conn_2>;
+        };
+
+        bootloader_reset: bootloader_reset {
+            compatible = "zmk,behavior-hold-tap";
+            display-name = "Reset / Bootloader";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <3000>;
+            bindings = <&bootloader>, <&sys_reset>;
+        };
+    };
+};

@@ -2,17 +2,34 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: yangdigi
-      url-base: https://github.com/yangdigi
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
   projects:
+    # Official ZMK. The Agar mini's board and shield live in this repo.
     - name: zmk
-      remote: yangdigi
-      revision: c526c062f974c87172782b8d964e2dd918e81923  # main, 2026-06-23
+      remote: zmkfirmware
+      revision: 4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85  # main, 2026-10-09
       import: app/west.yml
-    - name: zmk-keyboards-klink
-      remote: yangdigi
-      revision: e80a8335563aec32a8f2c47cba697077291bfb99  # main, 2025-05-18
+    # Pin Zephyr too: ZMK's own manifest names a branch, which can move.
+    - name: zephyr
+      remote: zmkfirmware
+      revision: 10ba6d0cb38bc3d258775d27982f707599320085  # v4.1.0+zmk-fixes
+      import:
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
   self:
     path: config

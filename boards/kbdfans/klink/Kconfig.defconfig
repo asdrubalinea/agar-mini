@@ -3,9 +3,6 @@
 
 if BOARD_KLINK
 
-config BOARD
-    default "klink"
-
 if USB_DEVICE_STACK
 
 config USB_NRFX
@@ -13,7 +10,4 @@ config USB_NRFX
 
 endif # USB_DEVICE_STACK
 
-config BT_CTLR
-    default BT
-
-endif
+endif # BOARD_KLINK

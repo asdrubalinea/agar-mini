@@ -18,29 +18,16 @@
       firmware = zmk-nix.legacyPackages.${system}.buildKeyboard {
         name = "agar-mini-firmware";
 
-        src = nixpkgs.lib.sourceFilesBySuffices self [ ".board" ".c" ".cmake" ".conf" ".defconfig" ".dts" ".dtsi" ".json" ".keymap" ".overlay" ".shield" ".txt" ".yml" "_defconfig" ];
+        src = nixpkgs.lib.fileset.toSource {
+          root = ./.;
+          fileset = nixpkgs.lib.fileset.unions [ ./boards ./config ./zephyr ./CMakeLists.txt ];
+        };
 
-        board = "klink";
+        board = "klink//zmk";
         shield = "agar_mini_ble";
         enableZmkStudio = true;
 
-        # The nanopb bundled with this ZMK fork still imports pkg_resources,
-        # which setuptools no longer ships.
-        postConfigure = ''
-          sed -i \
-            -e 's/import pkg_resources/import importlib.resources/' \
-            -e "s|pkg_resources.resource_filename('grpc_tools', '_proto')|str(importlib.resources.files('grpc_tools') / '_proto')|" \
-            ../modules/lib/nanopb/generator/proto/{__init__,_utils}.py
-
-          # hog.h and hog.c still test the old CONFIG_ZMK_MOUSE name. In hog.h
-          # that hides the mouse report prototype, which GCC 15 rejects; in
-          # hog.c it miscounts the Bluetooth HID attributes, so power/sleep
-          # keys are sent to the wrong attribute.
-          sed -i 's/IS_ENABLED(CONFIG_ZMK_MOUSE)/IS_ENABLED(CONFIG_ZMK_POINTING)/' \
-            ../zmk/app/include/zmk/hog.h ../zmk/app/src/hog.c
-        '';
-
-        zephyrDepsHash = "sha256-AlK6foSeozV6mMDEFRRWVlCVnqw5bF9g03ryjMQ/ffw=";
+        zephyrDepsHash = "sha256-zDnYk7iavZLcuPRrl8QUMROnvikwBGOrDa5prc2cFtk=";
 
         meta = {
           description = "ZMK firmware";

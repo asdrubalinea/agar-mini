@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "./boards/shields/klink_kbd/common.keymap"
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+#include "device_keys.dtsi"
 
 #define BASE 0
 #define NUM  1
@@ -118,11 +118,6 @@
             bindings = <&mo>, <&kp>;
         };
     };
-
-    // KBDfans' only combo is a diagnostic (Q + the key right of P) that sits
-    // on our ' key. Drop the whole node: an empty one leaves ZMK's combo code
-    // with zero-length arrays.
-    /delete-node/ combos;
 
     conditional_layers {
         compatible = "zmk,conditional-layers";
