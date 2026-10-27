@@ -24,9 +24,9 @@
   .page:last-child { page-break-after: auto; }
 
   /* Header band */
-  .band { background: var(--band); height: 30mm; display: flex; align-items: center; padding: 0 12mm; gap: 7mm; }
+  .band { background: var(--band); height: 24mm; display: flex; align-items: center; padding: 0 12mm; gap: 7mm; }
   .band.small { height: 18mm; }
-  .brand { font-family: "TeX Gyre Adventor", sans-serif; font-size: 15mm; line-height: 1; color: #f4f1f0;
+  .brand { font-family: "TeX Gyre Adventor", sans-serif; font-size: 13mm; line-height: 1; color: #f4f1f0;
            -webkit-text-stroke: 0.25mm #6b6664; letter-spacing: 0.4mm; }
   .band.small .brand { font-size: 9mm; }
   .subtitle { font-family: "TeX Gyre Adventor", sans-serif; color: var(--ink); line-height: 1.25; }
@@ -36,13 +36,13 @@
   .band .corner { margin-left: auto; font-family: "TeX Gyre Adventor", sans-serif; font-size: 2.6mm;
                   color: var(--muted); text-align: right; letter-spacing: 0.3mm; }
 
-  .content { padding: 5mm 12mm 0; }
+  .content { padding: 4mm 12mm 0; }
   .tip { text-align: right; font-size: 2.3mm; color: var(--muted); margin-bottom: 1mm; }
   .tip b { color: var(--ink); }
 
   /* Layers */
-  .layer { margin-bottom: 5mm; }
-  .layer h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 4.6mm; margin-bottom: 2.2mm; }
+  .layer { margin-bottom: 3.6mm; }
+  .layer h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 4.2mm; margin-bottom: 1.6mm; }
   .layer h2 span { color: var(--muted); font-size: 3.2mm; margin-left: 2mm; }
   .layer-body { display: flex; gap: 5mm; align-items: flex-start; }
   .kb { position: relative; flex: none; }
@@ -126,9 +126,10 @@
       <table>
         <thead><tr><th>Action</th><th>Sends</th><th>Keys</th></tr></thead>
         <tbody>
-          <tr><td>è à ì ò ù</td><td class="combo"></td><td><span class="hold">hold</span> the vowel</td></tr>
-          <tr><td>é</td><td class="combo"></td><td><span class="hold">hold</span> <kbd>'</kbd></td></tr>
-          <tr><td>È</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="hold">hold</span> <kbd>E</kbd></td></tr>
+          <tr><td>è à ì ò ù</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Acc</kbd>, <span class="tap">tap</span> the vowel</td></tr>
+          <tr><td>é</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Acc</kbd>, <span class="tap">tap</span> <kbd>'</kbd></td></tr>
+          <tr><td>È</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>Acc</kbd>, <span class="tap">tap</span> <kbd>E</kbd></td></tr>
+          <tr><td>Backtick</td><td class="combo">`</td><td><span class="tap">tap</span> <kbd>Acc</kbd> twice &nbsp;/&nbsp; <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Esc</kbd></td></tr>
           <tr><td>Capital letter</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd> <span class="tap">(right thumb)</span>, <span class="tap">tap</span> the letter</td></tr>
           <tr><td>Apostrophe / quote</td><td class="combo">' / "</td><td><span class="tap">tap</span> <kbd>'</kbd> &nbsp;/&nbsp; <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>'</kbd></td></tr>
           <tr><td>Newline in Claude Code</td><td class="combo">Shift+Enter</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>Enter</kbd></td></tr>
@@ -157,19 +158,19 @@
           <tbody>
             <tr><td>Space / NAV</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td class="num">150</td></tr>
             <tr><td>Space / NUM</td><td>balanced</td><td class="num">200</td><td class="num">175</td><td>—</td></tr>
-            <tr><td>Vowels and <code>'</code></td><td>tap-preferred</td><td class="num">250</td><td>—</td><td>—</td></tr>
           </tbody>
         </table>
         <table>
           <thead><tr><th>Sticky keys</th><th>Release after</th><th>Quick release</th></tr></thead>
           <tbody>
             <tr><td>Shift, Ctrl, Alt, Super</td><td class="num">1500</td><td>yes</td></tr>
+            <tr><td>Acc (sticky layer)</td><td class="num">1500</td><td>no</td></tr>
           </tbody>
         </table>
       </div>
       <ul class="note">
-        <li>All values in milliseconds. Vowels are decided by time only: shorter than 250 ms types the letter, longer gives the accent; they type on release. With Ctrl, Alt or Super active, a long press gives the plain letter, so shortcuts like Ctrl+A still work.</li>
-        <li>Sticky keys apply to the next key only and expire after 1.5 s. Tapping Ctrl then Shift stacks them. They can also be held normally.</li>
+        <li>All values in milliseconds. Letters and <code>'</code> have no hold behaviour: they type on press.</li>
+        <li>Sticky keys apply to the next key only and expire after 1.5 s. Tapping Ctrl then Shift stacks them. They can also be held normally. Acc ignores modifiers, so Shift tapped between Acc and the vowel still gives the capital.</li>
         <li>Space / NUM has no prior-idle setting; otherwise typing <code>port 8080</code> quickly would give letters instead of digits.</li>
       </ul>
     </div>
@@ -178,11 +179,11 @@
       <div>
         <h3>Design</h3>
         <ol>
-          <li><b>Thumbs hold, nails tap one key at a time.</b> No pinkies, no ring-finger chords; ring fingers only reach Esc and Backspace.</li>
-          <li><b>Long-press vowels</b> for Italian accents, like a phone keyboard.</li>
+          <li><b>Thumbs hold, nails tap one key at a time.</b> No chords; ring fingers only reach Esc and Backspace, the pinky only Acc, with the back of the finger.</li>
+          <li><b>Accents as two taps:</b> Acc, then the vowel, like <code>`</code> + vowel on <code>us intl</code>.</li>
           <li><b>Sticky Shift, Ctrl and Alt:</b> tap, then the next key.</li>
           <li><b><code>'</code> and <code>"</code> are always plain</b>, despite <code>us intl</code> dead keys.</li>
-          <li><b>Super under the left thumb, a second Shift under the right.</b> Backspace stays top-right.</li>
+          <li><b>Super under the left thumb, sticky Shift under the right.</b> Backspace stays top-right.</li>
         </ol>
       </div>
       <div>
@@ -197,7 +198,7 @@
 </section>
 
 <script>
-const U = 11.1;      // mm per key unit
+const U = 9.6;       // mm per key unit
 const GAP = 0.5;     // mm between keys
 
 // Physical geometry: [x offset, widths...] per row (43 keys: 13 / 12 / 12 / 6)
@@ -219,19 +220,20 @@ const LAYERS = [
   {
     name: "Layer 0", sub: "BASE",
     keys: [
-      ["Esc","Q","W",acc("E","è"),"R","T","Y",acc("U","ù"),acc("I","ì"),acc("O","ò"),"P",acc("'","é"),"Bksp"],
-      ["Tab",acc("A","à"),"S","D","F","G","H","J","K","L",[":",";"],"Enter"],
-      [sk("Shift"),"Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
+      ["Esc","Q","W","E","R","T","Y","U","I","O","P",["\"","'"],"Bksp"],
+      ["Tab","A","S","D","F","G","H","J","K","L",[":",";"],"Enter"],
+      [sk("Acc"),"Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
       [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},sk("Shift"),"↑"],
     ],
     side: [
-      ["accent:è", "<b>Hold for the accent</b><br>à è ì ò ù, and é on <code>'</code>"],
       ["sticky:1×", "<b>Sticky:</b> tap, then the next key"],
+      ["Acc", "<b>Accent key</b> (back of the left pinky): tap it, then the vowel, Layer 4"],
       ["chip:NUM", "<b>Hold for Layer 1</b>, right Space"],
       ["chip:NAV", "<b>Hold for Layer 2</b>, left Space"],
       ["held2", "<b>Both Spaces</b> for Layer 3"],
       ["'", "<b>Plain apostrophe</b>; Shift gives <code>\"</code>"],
       ["Super", "<b>Plain key</b>, hold it"],
+      ["Shift", "<b>The only Shift</b>, right thumb"],
       ["↑", "<b>Up arrow</b> for the last command"],
     ],
   },
@@ -281,6 +283,21 @@ const LAYERS = [
       ["Boot", "<b>Bootloader:</b> hold 3 s; a tap restarts"],
       ["icon:" + NF.prev + " " + NF.play + " " + NF.next, "<b>Media</b> previous, play/pause, next"],
       ["icon:" + NF.vdn + " " + NF.vup + " " + NF.mute, "<b>Volume</b> down, up, mute"],
+    ],
+  },
+  {
+    name: "Layer 4", sub: "ACC",
+    keys: [
+      ["","","","è","","","","ù","ì","ò","","é",""],
+      ["","à","","","","","","","","","",""],
+      ["`","","","","","","","","","","",""],
+      ["","","","","",""],
+    ],
+    side: [
+      ["sticky:1×", "<b>Tap Acc</b>, then the key; expires after 1.5 s"],
+      ["È", "<b>Capital:</b> tap Shift too, before or after Acc"],
+      ["`", "<b>Acc twice</b> types a backtick"],
+      ["·", "<b>Other keys pass through</b>, so a stray Acc does no harm"],
     ],
   },
 ];

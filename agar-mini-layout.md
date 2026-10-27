@@ -2,17 +2,17 @@
 
 Tailored to how I type: with the nails, using thumbs, index and middle fingers of both hands,
 one key at a time. Ring fingers only reach the top corners (Esc, Backspace), with the pad.
-No pinkies. Mostly prose in English and Italian (Claude Code, Reddit), Helix as editor,
+Pinkies press the edge keys with the back of the finger. Mostly prose in English and Italian (Claude Code, Reddit), Helix as editor,
 mangowm as window manager (Super for everything, workspaces 1–0).
 
 ## Principles
 
-1. **Thumbs hold, nails tap one key at a time.** Nothing needs a pinky, a ring finger or
-   several fingers pressed together.
-2. **Long-press vowels for Italian accents**, like a phone keyboard: hold `e` → è.
+1. **Thumbs hold, nails tap one key at a time.** Nothing needs a ring finger or several
+   fingers pressed together; the only pinky key is the bottom-left corner.
+2. **Accents as two taps**, like `` ` `` + vowel on `us intl`: tap `Acc`, tap `e` → è.
 3. **Sticky modifiers.** Shift, Ctrl and Alt are tapped, then the next key is tapped.
 4. **`'` and `"` always type plain characters**, even though the computer uses `us intl` dead keys.
-5. **Super under the left thumb, a second sticky Shift under the right thumb.**
+5. **Super under the left thumb, sticky Shift under the right thumb.**
    Backspace stays top-right, as on the Q4.
 
 ## Physical layout
@@ -26,21 +26,21 @@ Legend: `·` = same as base. `(x)` = what the key gives when held. `1×` = stick
 ### Layer 0 — BASE
 
 ```
-Esc    Q    W    E(è) R    T    Y    U(ù) I(ì) O(ò) P    '(é) Bksp
-Tab    A(à) S    D    F    G    H    J    K    L    ;    Enter
-Shift1× Z   X    C    V    B    N    M    ,    .    /    -
+Esc    Q    W    E    R    T    Y    U    I    O    P    '    Bksp
+Tab    A    S    D    F    G    H    J    K    L    ;    Enter
+Acc1×  Z    X    C    V    B    N    M    ,    .    /    -
        Ctrl1× Super [Space/NAV]  [Space/NUM]  Shift1× ↑
 ```
 
-- Vowels: tap = letter, hold = accented letter. Shift first gives the capital (È).
-  With Ctrl, Alt or Super active, holding gives the plain letter, so shortcuts still work.
-- `'`: tap = plain apostrophe, hold = é. Shift + `'` = plain `"`.
+- `Acc` (bottom-left corner, back of the left pinky): sticky accent key. Tap it, then the
+  vowel: `Acc`, `e` → è. See the ACC layer.
+- `'`: plain apostrophe. Shift + `'` = plain `"`.
 - `Shift`, `Ctrl`: sticky. Tap, then the next key. They can also be held normally.
 - `Super`: plain key, no hold behaviour.
 - `Space/NAV` (left thumb): tap = Space, hold = NAV.
 - `Space/NUM` (right thumb): tap = Space, hold = NUM.
-- `Shift` (stock ← key, right thumb): a second sticky Shift, for capitals, `?`, `"`, È and
-  Shift+Enter without moving the left hand.
+- `Shift` (stock ← key, right thumb): the only Shift, sticky, for capitals, `?`, `"`, È and
+  Shift+Enter.
 - `↑` (stock ↓ key): plain Up arrow, to recall the last command. Holding it repeats.
   The other arrows and Alt are on NAV.
 - Hold both Spaces for FN.
@@ -84,13 +84,28 @@ Caps   BT1  BT2  BT3  USB  BLE  Prev Vol- Vol+ Next Play Mute
   These are the stock KBDfans keys, so the status light reacts as before.
 - `USB` / `BLE` switch the output.
 
+### Layer 4 — ACC (tap `Acc`, then the key)
+
+```
+·      ·    ·    è    ·    ·    ·    ù    ì    ò    ·    é    ·
+·      à    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·
+`      ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·
+       ·    ·    ·              ·         ·    ·
+```
+
+- `Acc` is a sticky layer: it applies to the next key only and expires after 1.5 s.
+- Shift before or after `Acc` gives the capital: `Shift`, `Acc`, `e` → È.
+- `Acc` twice types a plain backtick. Any other key passes through unchanged, so a stray
+  `Acc` does no harm.
+
 ## Everyday actions
 
 | Action | Sends | Keys |
 |---|---|---|
-| è à ì ò ù | | hold the vowel |
-| é | | hold `'` |
-| È | | tap Shift, hold `E` |
+| è à ì ò ù | | tap `Acc`, tap the vowel |
+| é | | tap `Acc`, tap `'` |
+| È | | tap Shift, tap `Acc`, tap `E` |
+| Backtick | `` ` `` | tap `Acc` twice (or hold right Space, tap `Esc`) |
 | Capital letter | | tap Shift (right thumb), tap letter |
 | Apostrophe / quote | `'` / `"` | tap `'` / tap Shift, tap `'` |
 | Newline in Claude Code | `Shift+Enter` | tap Shift, tap Enter |
@@ -116,15 +131,15 @@ No mango config changes are needed.
 |---|---|---|---|---|
 | Space/NAV | balanced | 200 | 175 | 150 |
 | Space/NUM | balanced | 200 | 175 | — |
-| Vowels and `'` | tap-preferred | 250 | — | — |
 
 | Sticky keys | release-after-ms | quick-release |
 |---|---|---|
 | Shift, Ctrl, Alt (base and NAV) | 1500 | yes |
+| `Acc` (sticky layer) | 1500 | no |
 
-- Vowels are decided by time only: shorter than 250 ms types the letter, longer gives the accent.
-  They type on release. If accents appear by mistake, raise the term; if they're slow to come, lower it.
 - Sticky keys apply to the next key only and expire after 1.5 s. Tapping Ctrl then Shift stacks them.
+- `Acc` ignores modifiers, so Shift tapped between `Acc` and the vowel still gives the capital.
+  Letters and `'` have no hold behaviour: they type on press.
 - Space/NUM has no `require-prior-idle-ms`; otherwise typing `port 8080` quickly would give letters.
 
 ## Requires `us intl` on the computer
@@ -215,13 +230,14 @@ To go back to stock, flash KBDfans' `agar_mini-klink-zmk.uf2` from the
 
 ### Implementation notes
 
-- Vowels: hold-tap (tap-preferred, 250 ms). Tap `&kp E`; hold = mod-morph that sends `&kp E`
-  when Ctrl/Alt/Super is active (mods kept), otherwise a mod-morph between two macros
-  (`` ` `` E and `` ` `` Shift+E).
-- `'`: hold-tap. Tap = mod-morph (`'` Space / Shift+`'` Space); hold = mod-morph (`'` E / `'` Shift+E).
+- `Acc`: `&sl ACC` with `release-after-ms = 1500`. On the ACC layer each vowel is a mod-morph
+  between two macros (`` ` `` E and `` ` `` Shift+E); `'` is the same with `'` E / `'` Shift+E.
+  The morph masks Shift while the macro runs, so the dead key itself is never shifted.
+- `'`: mod-morph (`'` Space / Shift+`'` Space); with Ctrl, Alt or Super active it sends a plain
+  `'` with the mods kept, so shortcuts still work.
 - Sticky modifiers: `&sk` with `release-after-ms = 1500` and `quick-release`.
 - FN: conditional layer, active when NAV and NUM are both active.
-- Layers 4–7 are reserved so ZMK Studio can add layers later.
+- Layers 5–7 are reserved so ZMK Studio can add layers later.
 
 ## Dropped from the stock layout
 
