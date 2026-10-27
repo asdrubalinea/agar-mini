@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Agar mini Cheatsheet</title>
+<style>
+  @page { size: A4; margin: 0; }
+  @font-face { font-family: "Punct"; src: local("Noto Sans Bold"), local("NotoSans-Bold"); font-weight: bold; unicode-range: U+22, U+27, U+60; }
+  :root { --ink: #2b2827; --muted: #6f6a68; --line: #4a4645; --band: #cdc8c6; --rule: #d8d4d2;
+          --legend-font: "Punct", "TeX Gyre Adventor", "Noto Sans", sans-serif; --body-font: "Noto Sans", sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; color: var(--ink); font-family: var(--body-font); }
+  .page { width: 210mm; height: 297mm; overflow: hidden; }
+  .band { background: var(--band); height: 18mm; display: flex; align-items: center; padding: 0 12mm; gap: 7mm; }
+  .brand { white-space: nowrap; font-family: "TeX Gyre Adventor", sans-serif; font-size: 9mm; line-height: 1; color: #f4f1f0; -webkit-text-stroke: 0.25mm #6b6664; letter-spacing: 0.4mm; }
+  .subtitle { font-family: "TeX Gyre Adventor", sans-serif; font-size: 4.6mm; }
+  .legend { margin-left: auto; font-size: 2.4mm; color: var(--muted); text-align: right; line-height: 1.4; }
+  .legend b { color: var(--ink); }
+  .content { padding: 7mm 12mm 0; column-count: 2; column-gap: 8mm; }
+  section { break-inside: avoid; margin-bottom: 6mm; }
+  h2 { font-family: "TeX Gyre Adventor", sans-serif; font-weight: normal; font-size: 5mm; margin-bottom: 1.5mm; }
+  table { width: 100%; border-collapse: collapse; font-size: 2.9mm; }
+  td { padding: 1.3mm 1mm; border-bottom: 0.15mm solid var(--rule); vertical-align: middle; line-height: 1.55; }
+  td:first-child { width: 36%; color: var(--ink); }
+  td:first-child code { font-family: "DejaVu Sans Mono", monospace; font-size: 2.4mm; color: var(--muted); }
+  .sym td:first-child { width: 52%; }
+  kbd { display: inline-block; font-family: var(--legend-font); font-weight: bold; font-size: 2.6mm;
+        border: 0.2mm solid var(--line); border-bottom-width: 0.55mm; border-radius: 0.6mm;
+        padding: 0.1mm 1mm; margin: 0.15mm 0; background: #fff; line-height: 1.25; white-space: nowrap; }
+  .h { font-size: 2.4mm; color: var(--muted); font-style: italic; }
+  .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 2.9mm; letter-spacing: 0.2mm; white-space: nowrap; }
+  p.note { font-size: 2.6mm; color: var(--muted); margin-top: 1.2mm; line-height: 1.45; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="band">
+    <div class="brand">Agar mini</div>
+    <div class="subtitle">Le combinazioni di tutti i giorni</div>
+    <div class="legend"><b>tieni</b> = pollice che resta premuto &nbsp;·&nbsp; <b>tocca</b> = un tocco e via<br>
+      Shift, Ctrl, Acc e i modificatori su NAV sono <b>sticky</b>: valgono per il tasto dopo, si sommano, scadono in 1,5 s</div>
+  </header>
+  <div class="content">
+
+    <section>
+      <h2>Scrivere</h2>
+      <table>
+        <tr><td>Maiuscola</td><td>tocca <kbd>Shift</kbd> <span class="h">(pollice destro)</span>, tocca la lettera</td></tr>
+        <tr><td>è à ì ò ù</td><td>tocca <kbd>Acc</kbd> <span class="h">(mignolo, in basso a sinistra)</span>, tocca la vocale</td></tr>
+        <tr><td>é</td><td>tocca <kbd>Acc</kbd>, tocca <kbd>'</kbd></td></tr>
+        <tr><td>È</td><td>tocca <kbd>Shift</kbd>, tocca <kbd>Acc</kbd>, tocca <kbd>E</kbd></td></tr>
+        <tr><td>' &nbsp; "</td><td>tocca <kbd>'</kbd> &nbsp;·&nbsp; tocca <kbd>Shift</kbd>, tocca <kbd>'</kbd></td></tr>
+        <tr><td>? &nbsp; !</td><td>tocca <kbd>Shift</kbd>, tocca <kbd>/</kbd> &nbsp;·&nbsp; tieni <kbd>Space dx</kbd>, tocca <kbd>Z</kbd></td></tr>
+        <tr><td>: &nbsp; _</td><td>tocca <kbd>Shift</kbd>, tocca <kbd>;</kbd> &nbsp;·&nbsp; tocca <kbd>Shift</kbd>, tocca <kbd>-</kbd></td></tr>
+        <tr><td>Numeri 1 … 0</td><td>tieni <kbd>Space dx</kbd>, tocca <kbd>Q</kbd> … <kbd>P</kbd></td></tr>
+        <tr><td>Backtick `</td><td>tocca <kbd>Acc</kbd> due volte</td></tr>
+        <tr><td>A capo in Claude Code</td><td>tocca <kbd>Shift</kbd>, tocca <kbd>Enter</kbd></td></tr>
+        <tr><td>Cancella</td><td><kbd>Bksp</kbd> in alto a destra &nbsp;·&nbsp; Del: tieni <kbd>Space dx</kbd> + <kbd>Bksp</kbd></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Simboli (tieni Space dx)</h2>
+      <table class="sym">
+        <tr><td class="mono">Q W E R T Y U I O P ' </td><td class="mono">1 2 3 4 5 6 7 8 9 0 =</td></tr>
+        <tr><td class="mono">A S D F G H J K L ;</td><td class="mono">~ | \ [ { } ] ( ) _</td></tr>
+        <tr><td class="mono">Z X C V B N M ,</td><td class="mono">! @ # $ % ^ &amp; *</td></tr>
+        <tr><td class="mono">Esc &nbsp; . / -</td><td class="mono">` &nbsp;·&nbsp; restano . / -</td></tr>
+      </table>
+      <p class="note">Esempi: <code>~/</code> = Space dx + A, poi /. &nbsp;<code>+</code> = Shift, poi Space dx + '.</p>
+    </section>
+
+    <section>
+      <h2>mango</h2>
+      <table>
+        <tr><td>Super + lettera <code>Super+Enter, Super+q</code></td><td>tieni <kbd>Super</kbd> <span class="h">(pollice sinistro)</span>, tocca la lettera</td></tr>
+        <tr><td>Workspace 3 <code>Super+3</code></td><td>tieni <kbd>Super</kbd> + <kbd>Space dx</kbd>, tocca <kbd>E</kbd></td></tr>
+        <tr><td>Sposta finestra su 3 <code>Super+Shift+3</code></td><td>tocca <kbd>Shift</kbd> prima, poi tieni <kbd>Super</kbd> + <kbd>Space dx</kbd>, tocca <kbd>E</kbd></td></tr>
+        <tr><td>Focus a sinistra <code>Super+←</code></td><td>tieni <kbd>Space sx</kbd>, tocca <kbd>A</kbd>, tocca <kbd>H</kbd> <span class="h">(J K L = ↓ ↑ →)</span></td></tr>
+        <tr><td>Sposta finestra a sinistra <code>Super+Shift+←</code></td><td>tieni <kbd>Space sx</kbd>, tocca <kbd>A</kbd>, tocca <kbd>F</kbd>, tocca <kbd>H</kbd></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Terminale, kitty, fish</h2>
+      <table>
+        <tr><td>Ctrl + lettera <code>Ctrl+C, Ctrl+R</code></td><td>tocca <kbd>Ctrl</kbd> <span class="h">(angolo in basso a sinistra)</span>, tocca la lettera</td></tr>
+        <tr><td>Copia / incolla in kitty <code>Ctrl+Shift+C / V</code></td><td>tocca <kbd>Ctrl</kbd>, tocca <kbd>Shift</kbd>, tocca <kbd>C</kbd> / <kbd>V</kbd></td></tr>
+        <tr><td>Tab 3 di kitty <code>Alt+3</code></td><td>tieni <kbd>Space sx</kbd>, tocca <kbd>S</kbd>, lascia, tieni <kbd>Space dx</kbd>, tocca <kbd>E</kbd></td></tr>
+        <tr><td>Ultimo comando</td><td>tocca <kbd>↑</kbd> <span class="h">(in basso a destra)</span>, tocca <kbd>Enter</kbd></td></tr>
+        <tr><td>Accetta il suggerimento di fish</td><td>tieni <kbd>Space sx</kbd>, tocca <kbd>L</kbd></td></tr>
+        <tr><td>Parola per parola <code>Ctrl+←</code></td><td>tieni <kbd>Space sx</kbd>, tocca <kbd>D</kbd>, tocca <kbd>H</kbd></td></tr>
+        <tr><td>Inizio / fine riga</td><td>tieni <kbd>Space sx</kbd>, tocca <kbd>Y</kbd> / <kbd>O</kbd> <span class="h">(U I = PgDn PgUp)</span></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Helix</h2>
+      <table>
+        <tr><td>Esc</td><td><kbd>Esc</kbd> in alto a sinistra</td></tr>
+        <tr><td>Comando :</td><td>tocca <kbd>Shift</kbd>, tocca <kbd>;</kbd></td></tr>
+        <tr><td>Cerca / &nbsp; indietro ?</td><td>tocca <kbd>/</kbd> &nbsp;·&nbsp; tocca <kbd>Shift</kbd>, tocca <kbd>/</kbd></td></tr>
+        <tr><td>Ctrl + lettera <code>Ctrl+w, Ctrl+o, Ctrl+u</code></td><td>tocca <kbd>Ctrl</kbd>, tocca la lettera</td></tr>
+        <tr><td>Alt + lettera <code>Alt+o, Alt+.</code></td><td>tieni <kbd>Space sx</kbd>, tocca <kbd>S</kbd>, lascia, tocca la lettera</td></tr>
+        <tr><td>Seleziona tutto % &nbsp;·&nbsp; maiuscole ~</td><td>tieni <kbd>Space dx</kbd>, tocca <kbd>B</kbd> &nbsp;·&nbsp; tocca <kbd>A</kbd></td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Tastiera</h2>
+      <table>
+        <tr><td>Layer NAV / NUM / FN</td><td>tieni <kbd>Space sx</kbd> / <kbd>Space dx</kbd> / entrambe</td></tr>
+        <tr><td>Bluetooth 1 2 3</td><td>tieni entrambe le <kbd>Space</kbd>, tocca <kbd>Q</kbd> <kbd>W</kbd> <kbd>E</kbd> <span class="h">(3 s per dimenticare)</span></td></tr>
+        <tr><td>USB / Bluetooth</td><td>tieni entrambe le <kbd>Space</kbd>, tocca <kbd>R</kbd> / <kbd>T</kbd></td></tr>
+        <tr><td>Volume</td><td>tieni entrambe le <kbd>Space</kbd>, tocca <kbd>J</kbd> / <kbd>K</kbd>, <kbd>;</kbd> muto</td></tr>
+        <tr><td>Bootloader (per flashare)</td><td>tieni entrambe le <kbd>Space</kbd> + <kbd>Esc</kbd> per 3 s</td></tr>
+      </table>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>
