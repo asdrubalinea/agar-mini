@@ -54,7 +54,7 @@
     quick-release;
 };
 
-// The accent key: tap it, then the vowel
+// ' is the accent key: tap it, then the vowel, or Space for a plain '
 &sl {
     release-after-ms = <1500>;
 };
@@ -75,11 +75,11 @@
         ACCENT(acc_o, GRAVE, O)
         ACCENT(acc_u, GRAVE, U)
 
-        // ' key: ' (Shift: "); on ACC: é (Shift: É)
+        // ' key: accent key (Shift: "); on ACC: é (Shift: É)
         DEAD(eacute_lo, SQT, E)
         DEAD(eacute_up, SQT, LS(E))
         MORPH(eacute, &eacute_lo, &eacute_up)
-        MORPH(quote_mm, &lit_apos, &lit_dquote)
+        MORPH(quote_mm, &sl ACC, &lit_dquote)
         UNLESS_SHORTCUT(quote, &quote_mm, &kp SQT)
 
         // NUM layer: ` (Shift: ~) and 6 (Shift: ^) without dead keys
@@ -122,8 +122,8 @@
             bindings = <
 &kp ESC     &kp Q        &kp W     &kp E       &kp R  &kp T  &kp Y  &kp U       &kp I       &kp O       &kp P      &quote     &kp BSPC
 &kp TAB     &kp A        &kp S     &kp D       &kp F  &kp G  &kp H  &kp J       &kp K       &kp L       &kp SEMI   &kp RET
-&sl ACC     &kp Z        &kp X     &kp C       &kp V  &kp B  &kp N  &kp M       &kp COMMA   &kp DOT     &kp FSLH   &kp MINUS
-            &sk LCTRL    &kp LGUI              &spc_nav NAV SPACE   &spc_num NUM SPACE                  &sk LSHFT  &kp UP
+&sk LSHFT   &kp Z        &kp X     &kp C       &kp V  &kp B  &kp N  &kp M       &kp COMMA   &kp DOT     &kp FSLH   &kp MINUS
+            &sk LCTRL    &kp LGUI              &spc_nav NAV SPACE   &spc_num NUM SPACE                  &none      &kp UP
             >;
         };
 
@@ -162,8 +162,8 @@
             bindings = <
 &trans      &trans   &trans  &acc_e  &trans  &trans  &trans  &acc_u  &acc_i  &acc_o  &trans  &eacute  &trans
 &trans      &acc_a   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&lit_grave  &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-            &trans   &trans                  &trans                  &trans                  &trans   &trans
+&trans      &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            &trans   &trans                  &lit_apos               &lit_apos               &trans   &trans
             >;
         };
 
