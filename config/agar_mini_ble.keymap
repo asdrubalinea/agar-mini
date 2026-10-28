@@ -130,7 +130,7 @@
         num_layer {
             display-name = "Num";
             bindings = <
-&grave_mm  &kp N1    &kp N2  &kp N3    &kp N4    &kp N5     &six_mm     &kp N7    &kp N8    &kp N9    &kp N0     &kp EQUAL  &kp DEL
+&grave_mm  &kp N1    &kp N2  &kp N3    &kp N4    &kp N5     &six_mm     &kp N7    &kp N8    &kp N9    &kp N0     &kp EQUAL  &trans
 &trans     &lit_tilde &kp PIPE &kp BSLH &kp LBKT  &kp LBRC   &kp RBRC    &kp RBKT  &kp LPAR  &kp RPAR  &kp UNDER  &trans
 &trans     &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT  &lit_caret  &kp AMPS  &kp STAR  &trans    &trans     &trans
            &trans    &trans                      &trans                 &trans                        &trans     &trans

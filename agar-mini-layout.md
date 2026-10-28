@@ -49,12 +49,13 @@ Shift1× Z   X    C    V    B    N    M    ,    .    /    -
 ### Layer 1 — NUM (hold right Space)
 
 ```
-`      1    2    3    4    5    6    7    8    9    0    =    Del
+`      1    2    3    4    5    6    7    8    9    0    =    ·
 ·      ~    |    \    [    {    }    ]    (    )    _    ·
 ·      !    @    #    $    %    ^    &    *    ·    ·    ·
        ·    ·    ·              held      ·    ·
 ```
 
+- Backspace stays available, so a mistyped digit can be fixed without releasing the layer.
 - `.`, `/` and `-` stay available, so `~/`, `1.5` and `192.168.…` type without releasing the layer.
 - `` ` ``, `~` and `^` are sent as plain characters, not dead keys.
 - Super + digit switches mango workspace.
