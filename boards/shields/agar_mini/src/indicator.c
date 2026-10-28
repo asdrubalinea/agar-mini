@@ -10,6 +10,7 @@
 #include <zmk/battery.h>
 #include <zmk/ble.h>
 #include <zmk/endpoints.h>
+#include <zmk/hid.h>
 #include <zmk/hid_indicators.h>
 #include <zmk/events/activity_state_changed.h>
 #include <zmk/events/ble_active_profile_changed.h>
@@ -222,6 +223,26 @@ ZMK_LISTENER(klink_battery_report, battery_report_activity_cb);
 ZMK_SUBSCRIPTION(klink_battery_report, zmk_activity_state_changed);
 #endif // IS_ENABLED(CONFIG_ZMK_BLE)
 
+// Layer numbers from config/agar_mini_ble.keymap
+#define LAYER_NUM 1
+#define LAYER_NAV 2
+#define LAYER_FN  3
+#define LAYER_ACC 4
+
+static bool layer_on(zmk_keymap_layer_index_t index) {
+    return zmk_keymap_layer_active(zmk_keymap_layer_index_to_id(index));
+}
+
+// Steady colour for what is active: ' waiting for a vowel, a modifier, or a layer
+static uint8_t layer_mod_color(void) {
+    if (layer_on(LAYER_ACC)) return 0b011;          // yellow
+    if (zmk_hid_get_explicit_mods()) return 0b110;  // cyan
+    if (layer_on(LAYER_FN)) return 0b111;           // white; FN also turns on NUM and NAV
+    if (layer_on(LAYER_NUM)) return 0b100;          // blue
+    if (layer_on(LAYER_NAV)) return 0b010;          // green
+    return 0;
+}
+
 void led_process_thread(void) {
     while (true) {
         k_sleep(K_MSEC(20));
@@ -259,6 +280,8 @@ void led_process_thread(void) {
                 }
                 if (indicator_state.flash_times == 0) indicator_state.connection = 0;
             }
+        } else if (layer_mod_color()) {
+            set_indicator_color(layer_mod_color());
         } else if ( (indicator_state.battery <= 10) && (zmk_usb_is_powered() == 0) ) {
             if ((led_timer_steps & 0x1f) == 0xf) set_indicator_color(0b001);
             else if ((led_timer_steps & 0x1f) == 0x1f) set_indicator_color(0);

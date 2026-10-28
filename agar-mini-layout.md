@@ -166,7 +166,19 @@ quotes get an extra space.
 
 ## Status light
 
-The single RGB light comes from KBDfans' indicator code and is unchanged:
+The single RGB light comes from KBDfans' indicator code. Steady colours show what is active,
+listed from highest priority:
+
+| Light | Meaning |
+|---|---|
+| Steady yellow | `'` is waiting for a vowel or Space |
+| Steady cyan | A modifier is active: a sticky Shift, Ctrl, Alt or Super waiting, or Super held |
+| Steady white | FN layer |
+| Steady blue | NUM layer |
+| Steady green | NAV layer |
+| Steady magenta | Caps Lock on |
+
+The blinking patterns come first, and these steady colours win over the low-battery blink:
 
 | Light | Meaning |
 |---|---|
@@ -174,7 +186,6 @@ The single RGB light comes from KBDfans' indicator code and is unchanged:
 | Profile colour alternating with red | That profile isn't paired yet |
 | Profile colour alternating with blue | Paired, but the device isn't connecting |
 | Red blinking | Battery at 10% or less, on battery power |
-| Steady magenta | Caps Lock on |
 
 ## Firmware
 
@@ -199,7 +210,8 @@ What changed from KBDfans' files:
 - The shield drops an RGB strip the board doesn't have, and the keymap drops KBDfans' unused
   mouse keys, mod-taps and diagnostic combo (Q + the key right of P, which sat on `'`).
 - The status-light code follows ZMK's current API, no longer hides key presses from other
-  ZMK features, and keeps working if an unexpected Bluetooth slot is selected.
+  ZMK features, and keeps working if an unexpected Bluetooth slot is selected. It also shows
+  the active layer and modifiers.
 
 Nothing is patched at build time, and nothing is a prebuilt binary: the ARM compiler is built
 from source by Nix for the nRF52840's Cortex-M4.
