@@ -214,11 +214,21 @@ To update ZMK, change the commits in `config/west.yml`, then run `nix run .#upda
 ### Flash
 
 1. Connect the keyboard by USB.
-2. Enter the bootloader. It appears as a USB drive.
+2. Enter the bootloader. It appears as a USB drive named `KLINK-BOOT`.
    - From this layout: hold both Spaces and hold `Esc` (`Boot`) for 3 seconds.
    - From the stock KBDfans firmware: hold the stock → key (layer 3) and hold `B` for 3 seconds.
      That's where KBDfans' source puts it; if nothing happens, their published file may differ.
+   - By hardware, whatever firmware is on it: reset the controller twice within half a second.
+     KBDfans' PCB renders show no reset button; the reset pin (P0.18, pad 26 of the E73 radio
+     module on the back of the PCB) would have to be shorted to ground twice with tweezers.
+     The bootloader also stays in flashing mode on its own if the application area is empty.
 3. Run `nix run .#flash` (or copy `result/zmk.uf2` onto the drive). The keyboard restarts with the new layout.
+
+The bootloader is YDKB's build of the Adafruit nRF52 bootloader
+([yangdigi/Adafruit_nRF52_Bootloader](https://github.com/yangdigi/Adafruit_nRF52_Bootloader),
+board `klink`). It only ever writes the application area, so a bad firmware can't damage it;
+recovery is always "enter the bootloader again, flash something else". KBDfans' stock
+`agar_mini-klink-zmk.uf2` uses family `0x59952840` and starts at `0x26000`, the same as our build.
 
 Bluetooth pairings live in a separate part of the flash and normally survive a flash. If
 Bluetooth misbehaves after switching firmware, wipe the stored settings: build
