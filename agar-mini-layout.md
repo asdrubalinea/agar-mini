@@ -14,7 +14,7 @@ mangowm as window manager (Super for everything, workspaces 1–0).
 3. **Sticky modifiers.** Shift, Ctrl and Alt are tapped, then the next key is tapped.
 4. **`"`, `` ` ``, `~` and `^` type plain characters**, even though the computer uses `us intl` dead keys.
 5. **Shift where it always is**, bottom-left, to keep the muscle memory.
-   Super under the left thumb; the right thumb key is free. Backspace stays top-right, as on the Q4.
+   Super under the left thumb, ← and → under the right. Backspace stays top-right, as on the Q4.
 
 ## Physical layout
 
@@ -30,7 +30,7 @@ Legend: `·` = same as base. `(x)` = what the key gives when held. `1×` = stick
 Esc    Q    W    E    R    T    Y    U    I    O    P    '    Bksp
 Tab    A    S    D    F    G    H    J    K    L    ;    Enter
 Shift1× Z   X    C    V    B    N    M    ,    .    /    -
-       Ctrl1× Super [Space/NAV]  [Space/NUM]  ·    ↑
+       Ctrl1× Super [Space/NAV]  [Space/NUM]  ←    →
 ```
 
 - `Shift` (bottom-left corner, back of the left pinky, where Shift sits on any keyboard): the
@@ -41,8 +41,8 @@ Shift1× Z   X    C    V    B    N    M    ,    .    /    -
 - `Super`: plain key, no hold behaviour.
 - `Space/NAV` (left thumb): tap = Space, hold = NAV.
 - `Space/NUM` (right thumb): tap = Space, hold = NUM.
-- Stock ← key (right thumb): free, does nothing.
-- `↑` (stock ↓ key): plain Up arrow, to recall the last command. Holding it repeats.
+- `←` / `→` (stock ← and ↓ keys, right thumb): plain arrows. With Super held they switch window
+  (Super+← / Super+→); `→` alone accepts fish's autosuggestion. Holding them repeats.
   The other arrows and Alt are on NAV.
 - Hold both Spaces for FN.
 
@@ -116,15 +116,16 @@ Caps   BT1  BT2  BT3  USB  BLE  Prev Vol- Vol+ Next Play Mute
 | `!` | | hold right Space, tap `Z` |
 | Number | | hold right Space, tap the key above it (`Q` = 1 … `P` = 0) |
 | Backspace | | top-right corner, as on the Q4 |
-| Run the last command again | `Up`, `Enter` | tap ↑ (bottom right), tap Enter |
+| Run the last command again | `Up`, `Enter` | hold left Space, tap `K`, tap Enter |
 | Copy / paste | `Ctrl+C` / `Ctrl+V` | tap Ctrl, tap `C` / `V` |
 | Kitty copy / paste | `Ctrl+Shift+C/V` | tap Ctrl, tap Shift, tap `C` / `V` |
 | Switch workspace | `Super+3` | hold Super + hold right Space + tap `E` |
 | Move window to workspace | `Super+Shift+3` | tap Shift, then hold Super + hold right Space + tap `E` |
 | Other mango shortcuts | `Super+Return`, `Super+q`, … | hold Super + tap the key |
-| Focus direction | `Super+Left` | hold left Space, tap `A`, tap `H` |
+| Focus left / right | `Super+Left` / `Super+Right` | hold Super, tap ← / → |
+| Focus up / down | `Super+Up` | hold left Space, tap `A`, tap `K` |
 | Kitty tab | `Alt+3` | hold left Space, tap `S` (Alt), then hold right Space + tap `E` |
-| Accept fish autosuggestion | `Right` | hold left Space, tap `L` |
+| Accept fish autosuggestion | `Right` | tap → (bottom right) |
 
 No mango config changes are needed.
 
@@ -255,4 +256,4 @@ To go back to stock, flash KBDfans' `agar_mini-klink-zmk.uf2` from the
 ## Dropped from the stock layout
 
 Mouse keys (trackpad available), `Win+V`, Print Screen (mango uses `Super+Shift+S`),
-Insert, Pause, Scroll Lock, right Alt, arrow cluster (↑ kept bottom right, the rest on NAV).
+Insert, Pause, Scroll Lock, right Alt, arrow cluster (← → kept bottom right, all four on NAV).

@@ -136,15 +136,16 @@
           <tr><td>Question / exclamation mark</td><td class="combo">? / !</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>/</kbd> &nbsp;/&nbsp; <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Z</kbd></td></tr>
           <tr><td>Number</td><td class="combo">1 … 0</td><td><span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Q</kbd> … <kbd>P</kbd></td></tr>
           <tr><td>Backspace</td><td class="combo"></td><td>top-right corner, as on the Q4</td></tr>
-          <tr><td>Run the last command again</td><td class="combo">Up, Enter</td><td><span class="tap">tap</span> <kbd>↑</kbd> (bottom right), <span class="tap">tap</span> <kbd>Enter</kbd></td></tr>
+          <tr><td>Run the last command again</td><td class="combo">Up, Enter</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>K</kbd>, <span class="tap">tap</span> <kbd>Enter</kbd></td></tr>
           <tr><td>Copy / paste</td><td class="combo">Ctrl+C / Ctrl+V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
           <tr><td>Kitty copy / paste</td><td class="combo">Ctrl+Shift+C / V</td><td><span class="tap">tap</span> <kbd>Ctrl</kbd>, <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>C</kbd> / <kbd>V</kbd></td></tr>
           <tr><td>Switch workspace</td><td class="combo">Super+3</td><td><span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
           <tr><td>Move window to workspace</td><td class="combo">Super+Shift+3</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, then <span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
           <tr><td>Other mango shortcuts</td><td class="combo">Super+Return, Super+q</td><td><span class="hold">hold</span> <kbd>Super</kbd> + the key</td></tr>
-          <tr><td>Focus direction</td><td class="combo">Super+Left</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>A</kbd>, <span class="tap">tap</span> <kbd>H</kbd></td></tr>
+          <tr><td>Focus left / right</td><td class="combo">Super+Left / Right</td><td><span class="hold">hold</span> <kbd>Super</kbd> + <kbd>←</kbd> / <kbd>→</kbd></td></tr>
+          <tr><td>Focus up / down</td><td class="combo">Super+Up</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>A</kbd>, <span class="tap">tap</span> <kbd>K</kbd></td></tr>
           <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>S</kbd> (Alt), then <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
-          <tr><td>Accept fish autosuggestion</td><td class="combo">Right</td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>L</kbd></td></tr>
+          <tr><td>Accept fish autosuggestion</td><td class="combo">Right</td><td><span class="tap">tap</span> <kbd>→</kbd> (bottom right)</td></tr>
         </tbody>
       </table>
       <p class="note">No mango config changes are needed: every action sends exactly what a full-size keyboard would.</p>
@@ -183,14 +184,14 @@
           <li><b><code>'</code> is a dead key</b>, as on <code>us intl</code>: <code>'</code> + vowel = è, <code>'</code> + Space = <code>'</code>, with Italian grave accents.</li>
           <li><b>Sticky Shift, Ctrl and Alt:</b> tap, then the next key.</li>
           <li><b><code>"</code> <code>`</code> <code>~</code> <code>^</code> are plain</b>, despite <code>us intl</code> dead keys.</li>
-          <li><b>Shift where it always is,</b> bottom-left. Super under the left thumb; the right thumb key is free. Backspace stays top-right.</li>
+          <li><b>Shift where it always is,</b> bottom-left. Super under the left thumb, ← → under the right. Backspace stays top-right.</li>
         </ol>
       </div>
       <div>
         <h3>Requires <code>us intl</code></h3>
         <p class="muted">Accents and plain quotes are typed as <code>us intl</code> dead-key sequences: <code>`</code> + vowel for è, <code>'</code> + <code>e</code> for é, <code>'</code> + Space for <code>'</code>. On a device with a plain US layout, accents come out as <code>`e</code> and quotes get an extra space.</p>
         <h3 style="margin-top: 2.5mm">Dropped from stock</h3>
-        <p class="muted">Mouse keys (trackpad available), Win+V, Print Screen (mango uses Super+Shift+S), Insert, Pause, Scroll Lock, right Alt, arrow cluster (↑ kept bottom right, the rest on NAV).</p>
+        <p class="muted">Mouse keys (trackpad available), Win+V, Print Screen (mango uses Super+Shift+S), Insert, Pause, Scroll Lock, right Alt, arrow cluster (← → kept bottom right, all four on NAV).</p>
       </div>
     </div>
 
@@ -223,7 +224,7 @@ const LAYERS = [
       ["Esc","Q","W","E","R","T","Y","U","I","O","P",["\"","'"],"Bksp"],
       ["Tab","A","S","D","F","G","H","J","K","L",[":",";"],"Enter"],
       [sk("Shift"),"Z","X","C","V","B","N","M",["<",","],[">","."],["?","/"],["_","-"]],
-      [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},"","↑"],
+      [sk("Ctrl"),"Super",{t:"Space",tag:"NAV"},{t:"Space",tag:"NUM"},"←","→"],
     ],
     side: [
       ["sticky:1×", "<b>Sticky:</b> tap, then the next key"],
@@ -233,7 +234,7 @@ const LAYERS = [
       ["held2", "<b>Both Spaces</b> for Layer 3"],
       ["Super", "<b>Plain key</b>, hold it"],
       ["Shift", "<b>The only Shift</b>, bottom-left as usual"],
-      ["↑", "<b>Up arrow</b> for the last command"],
+      ["← →", "<b>Arrows:</b> with Super, switch window; → accepts fish's suggestion"],
     ],
   },
   {
