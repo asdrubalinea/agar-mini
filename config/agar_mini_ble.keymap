@@ -57,6 +57,7 @@
 // ' is the accent key: tap it, then the vowel, or Space for a plain '
 &sl {
     release-after-ms = <1500>;
+    ignore-modifiers;  // Shift tapped between ' and the vowel must not end ACC
 };
 
 / {
