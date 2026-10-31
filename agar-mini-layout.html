@@ -126,12 +126,12 @@
       <table>
         <thead><tr><th>Action</th><th>Sends</th><th>Keys</th></tr></thead>
         <tbody>
-          <tr><td>è à ì ò ù</td><td class="combo"></td><td><span class="hold">hold</span> <kbd>L Space</kbd> + the vowel</td></tr>
-          <tr><td>é</td><td class="combo"></td><td><span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>'</kbd></td></tr>
-          <tr><td>È</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd>, then <span class="hold">hold</span> <kbd>L Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>è à ì ò ù</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>'</kbd>, <span class="tap">tap</span> the vowel</td></tr>
+          <tr><td>é</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>'</kbd> twice</td></tr>
+          <tr><td>È</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>'</kbd>, <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>E</kbd></td></tr>
           <tr><td>Backtick</td><td class="combo">`</td><td><span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Esc</kbd></td></tr>
           <tr><td>Capital letter</td><td class="combo"></td><td><span class="tap">tap</span> <kbd>Shift</kbd> <span class="tap">(bottom left)</span>, <span class="tap">tap</span> the letter</td></tr>
-          <tr><td>Apostrophe / quote</td><td class="combo">' / "</td><td><span class="tap">tap</span> <kbd>'</kbd> &nbsp;/&nbsp; <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>'</kbd></td></tr>
+          <tr><td>Apostrophe / quote</td><td class="combo">' / "</td><td><span class="tap">tap</span> <kbd>'</kbd>, <span class="tap">tap</span> <kbd>Space</kbd> &nbsp;/&nbsp; <span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>'</kbd></td></tr>
           <tr><td>Newline in Claude Code</td><td class="combo">Shift+Enter</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>Enter</kbd></td></tr>
           <tr><td>Question / exclamation mark</td><td class="combo">? / !</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, <span class="tap">tap</span> <kbd>/</kbd> &nbsp;/&nbsp; <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Z</kbd></td></tr>
           <tr><td>Number</td><td class="combo">1 … 0</td><td><span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Q</kbd> … <kbd>P</kbd></td></tr>
@@ -143,7 +143,7 @@
           <tr><td>Move window to workspace</td><td class="combo">Super+Shift+3</td><td><span class="tap">tap</span> <kbd>Shift</kbd>, then <span class="hold">hold</span> <kbd>Super</kbd> + <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
           <tr><td>Other mango shortcuts</td><td class="combo">Super+Return, Super+q</td><td><span class="hold">hold</span> <kbd>Super</kbd> + the key</td></tr>
           <tr><td>Focus left / right</td><td class="combo">Super+Left / Right</td><td><span class="hold">hold</span> <kbd>Super</kbd> + <kbd>←</kbd> / <kbd>→</kbd></td></tr>
-          <tr><td>Focus up / down</td><td class="combo">Super+Up</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>G</kbd>, <span class="tap">tap</span> <kbd>K</kbd></td></tr>
+          <tr><td>Focus up / down</td><td class="combo">Super+Up</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>A</kbd>, <span class="tap">tap</span> <kbd>K</kbd></td></tr>
           <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>S</kbd> (Alt), then <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
           <tr><td>Accept fish autosuggestion</td><td class="combo">Right</td><td><span class="tap">tap</span> <kbd>→</kbd> (bottom right)</td></tr>
         </tbody>
@@ -165,12 +165,13 @@
           <thead><tr><th>Sticky keys</th><th>Release after</th><th>Quick release</th></tr></thead>
           <tbody>
             <tr><td>Shift, Ctrl, Alt, Super</td><td class="num">1500</td><td>yes</td></tr>
+            <tr><td><code>'</code> (sticky layer)</td><td class="num">1500</td><td>no</td></tr>
           </tbody>
         </table>
       </div>
       <ul class="note">
         <li>All values in milliseconds. Letters have no hold behaviour: they type on press.</li>
-        <li>Sticky keys apply to the next key only and expire after 1.5 s. Tapping Ctrl then Shift stacks them. They can also be held normally.</li>
+        <li>Sticky keys apply to the next key only and expire after 1.5 s. Tapping Ctrl then Shift stacks them. They can also be held normally. <code>'</code> ignores modifiers, so Shift tapped between <code>'</code> and the vowel still gives the capital; Shift before <code>'</code> gives <code>"</code>. A key other than a vowel, <code>'</code> or Space drops the apostrophe.</li>
         <li>Space / NUM has no prior-idle setting; otherwise typing <code>port 8080</code> quickly would give letters instead of digits.</li>
       </ul>
     </div>
@@ -180,7 +181,7 @@
         <h3>Design</h3>
         <ol>
           <li><b>Thumbs hold, nails tap one key at a time.</b> No chords; ring fingers only reach Esc and Backspace, the pinky only Shift, with the back of the finger.</li>
-          <li><b>Accents on the left Space:</b> hold it and tap the vowel = è, <code>'</code> = é. <code>'</code> alone types the apostrophe.</li>
+          <li><b><code>'</code> is a dead key</b>, as on <code>us intl</code>: <code>'</code> + vowel = è, <code>'</code> + Space = <code>'</code>, with Italian grave accents.</li>
           <li><b>Sticky Shift, Ctrl and Alt:</b> tap, then the next key.</li>
           <li><b><code>"</code> <code>`</code> <code>~</code> <code>^</code> are plain</b>, despite <code>us intl</code> dead keys.</li>
           <li><b>Shift where it always is,</b> bottom-left. Super under the left thumb, ← → under the right. Backspace stays top-right.</li>
@@ -227,7 +228,7 @@ const LAYERS = [
     ],
     side: [
       ["sticky:1×", "<b>Sticky:</b> tap, then the next key"],
-      ["'", "<b>Plain apostrophe</b>; Shift gives <code>\"</code>. Accents are on Layer 2"],
+      ["'", "<b>Accent key:</b> tap it, then the vowel (Layer 4), or Space for <code>'</code>; Shift gives <code>\"</code>"],
       ["chip:NUM", "<b>Hold for Layer 1</b>, right Space"],
       ["chip:NAV", "<b>Hold for Layer 2</b>, left Space"],
       ["held2", "<b>Both Spaces</b> for Layer 3"],
@@ -255,17 +256,16 @@ const LAYERS = [
   {
     name: "Layer 2", sub: "NAV",
     keys: [
-      ["","","","è","","","","ù","ì","ò","","é","Del"],
-      ["","à",sk("Alt"),sk("Ctrl"),sk("Shift"),sk("Super"),"←","↓","↑","→","",""],
-      ["","","","","","","Home","PgDn","PgUp","End","",""],
+      ["","","","","","","Home","PgDn","PgUp","End","","","Del"],
+      ["",sk("Super"),sk("Alt"),sk("Ctrl"),sk("Shift"),"","←","↓","↑","→","",""],
+      ["","","","","","","","","","","",""],
       ["","",H,"","",""],
     ],
     side: [
       ["held", "<b>Hold left Space</b>"],
-      ["è", "<b>Accents:</b> tap the vowel, <code>'</code> for é; tap Shift before Space for the capital"],
       ["← ↓ ↑ →", "<b>Arrows on hjkl</b>"],
       ["sticky:1×", "<b>Sticky modifiers:</b> tap <code>D</code>, tap <code>L</code> = Ctrl+→"],
-      ["Home", "<b>Home, PgDn, PgUp, End</b> sit below the arrows"],
+      ["Home", "<b>Home, PgDn, PgUp, End</b> sit above the arrows"],
     ],
   },
   {
@@ -284,6 +284,21 @@ const LAYERS = [
       ["Boot", "<b>Bootloader:</b> hold 3 s; a tap restarts"],
       ["icon:" + NF.prev + " " + NF.play + " " + NF.next, "<b>Media</b> previous, play/pause, next"],
       ["icon:" + NF.vdn + " " + NF.vup + " " + NF.mute, "<b>Volume</b> down, up, mute"],
+    ],
+  },
+  {
+    name: "Layer 4", sub: "ACC",
+    keys: [
+      ["","","","è","","","","ù","ì","ò","","é",""],
+      ["","à","","","","","","","","","",""],
+      ["","","","","","","","","","","",""],
+      ["","","'","'","",""],
+    ],
+    side: [
+      ["sticky:1×", "<b>Tap <code>'</code></b>, then the key; expires after 1.5 s"],
+      ["'", "<b>Either Space</b> types the apostrophe; <code>'</code> twice types é"],
+      ["È", "<b>Capital:</b> tap Shift after <code>'</code>"],
+      ["·", "<b>Other keys pass through</b>; the apostrophe is lost"],
     ],
   },
 ];

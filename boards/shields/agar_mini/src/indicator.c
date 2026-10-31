@@ -227,13 +227,15 @@ ZMK_SUBSCRIPTION(klink_battery_report, zmk_activity_state_changed);
 #define LAYER_NUM 1
 #define LAYER_NAV 2
 #define LAYER_FN  3
+#define LAYER_ACC 4
 
 static bool layer_on(zmk_keymap_layer_index_t index) {
     return zmk_keymap_layer_active(zmk_keymap_layer_index_to_id(index));
 }
 
-// Steady colour for what is active: a modifier or a layer
+// Steady colour for what is active: ' waiting for a vowel, a modifier, or a layer
 static uint8_t layer_mod_color(void) {
+    if (layer_on(LAYER_ACC)) return 0b011;          // yellow
     if (zmk_hid_get_explicit_mods()) return 0b110;  // cyan
     if (layer_on(LAYER_FN)) return 0b111;           // white; FN also turns on NUM and NAV
     if (layer_on(LAYER_NUM)) return 0b100;          // blue

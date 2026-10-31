@@ -14,6 +14,7 @@
 #define NUM  1
 #define NAV  2
 #define FN   3
+#define ACC  4
 
 #define SHIFTS (MOD_LSFT|MOD_RSFT)
 #define SHORTCUT_MODS (MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LGUI|MOD_RGUI)
@@ -42,7 +43,7 @@
         keep-mods = <SHORTCUT_MODS>; \
     };
 
-// Accented vowel for the NAV layer: è, or È when Shift is active
+// Accented vowel for the ACC layer: è, or È when Shift is active
 #define ACCENT(v, dead, letter) \
     DEAD(v##_lo, dead, letter) \
     DEAD(v##_up, dead, LS(letter)) \
@@ -51,6 +52,11 @@
 &sk {
     release-after-ms = <1500>;
     quick-release;
+};
+
+// ' is the accent key: tap it, then the vowel, or Space for a plain '
+&sl {
+    release-after-ms = <1500>;
 };
 
 / {
@@ -69,11 +75,11 @@
         ACCENT(acc_o, GRAVE, O)
         ACCENT(acc_u, GRAVE, U)
 
-        // ' key: plain ' (Shift: "); on NAV: é (Shift: É)
+        // ' key: accent key (Shift: "); on ACC: é (Shift: É)
         DEAD(eacute_lo, SQT, E)
         DEAD(eacute_up, SQT, LS(E))
         MORPH(eacute, &eacute_lo, &eacute_up)
-        MORPH(quote_mm, &lit_apos, &lit_dquote)
+        MORPH(quote_mm, &sl ACC, &lit_dquote)
         UNLESS_SHORTCUT(quote, &quote_mm, &kp SQT)
 
         // NUM layer: ` (Shift: ~) and 6 (Shift: ^) without dead keys
@@ -134,9 +140,9 @@
         nav_layer {
             display-name = "Nav";
             bindings = <
-&trans  &trans     &trans     &acc_e      &trans      &trans    &trans    &acc_u     &acc_i     &acc_o     &trans  &eacute  &kp DEL
-&trans  &acc_a     &sk LALT   &sk LCTRL   &sk LSHFT   &sk LGUI  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans  &trans
-&trans  &trans     &trans     &trans      &trans      &trans    &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &trans  &trans
+&trans  &trans     &trans     &trans      &trans      &trans  &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &trans  &trans  &kp DEL
+&trans  &sk LGUI   &sk LALT   &sk LCTRL   &sk LSHFT   &trans  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans  &trans
+&trans  &trans     &trans     &trans      &trans      &trans  &trans    &trans     &trans     &trans     &trans  &trans
         &trans     &trans                 &trans                        &trans                           &trans  &trans
             >;
         };
@@ -151,7 +157,16 @@
             >;
         };
 
-        layer4 { status = "reserved"; };
+        acc_layer {
+            display-name = "Acc";
+            bindings = <
+&trans      &trans   &trans  &acc_e  &trans  &trans  &trans  &acc_u  &acc_i  &acc_o  &trans  &eacute  &trans
+&trans      &acc_a   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans      &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            &trans   &trans                  &lit_apos               &lit_apos               &trans   &trans
+            >;
+        };
+
         layer5 { status = "reserved"; };
         layer6 { status = "reserved"; };
         layer7 { status = "reserved"; };
