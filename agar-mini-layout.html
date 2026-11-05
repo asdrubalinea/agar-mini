@@ -145,6 +145,7 @@
           <tr><td>Focus left / right</td><td class="combo">Super+Left / Right</td><td><span class="hold">hold</span> <kbd>Super</kbd> + <kbd>←</kbd> / <kbd>→</kbd></td></tr>
           <tr><td>Focus up / down</td><td class="combo">Super+Up</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>A</kbd>, <span class="tap">tap</span> <kbd>K</kbd></td></tr>
           <tr><td>Kitty tab</td><td class="combo">Alt+3</td><td><span class="hold">hold</span> <kbd>L Space</kbd>, <span class="tap">tap</span> <kbd>S</kbd> (Alt), then <span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>E</kbd></td></tr>
+          <tr><td>Game mode on / off</td><td class="combo"></td><td><span class="hold">hold</span> <kbd>R Space</kbd> + <kbd>Tab</kbd></td></tr>
           <tr><td>Accept fish autosuggestion</td><td class="combo">Right</td><td><span class="tap">tap</span> <kbd>→</kbd> (bottom right)</td></tr>
         </tbody>
       </table>
@@ -228,7 +229,7 @@ const LAYERS = [
     ],
     side: [
       ["sticky:1×", "<b>Sticky:</b> tap, then the next key"],
-      ["'", "<b>Accent key:</b> tap it, then the vowel (Layer 4), or Space for <code>'</code>; Shift gives <code>\"</code>"],
+      ["'", "<b>Accent key:</b> tap it, then the vowel (Layer 5), or Space for <code>'</code>; Shift gives <code>\"</code>"],
       ["chip:NUM", "<b>Hold for Layer 1</b>, right Space"],
       ["chip:NAV", "<b>Hold for Layer 2</b>, left Space"],
       ["held2", "<b>Both Spaces</b> for Layer 3"],
@@ -241,7 +242,7 @@ const LAYERS = [
     name: "Layer 1", sub: "NUM",
     keys: [
       [["~","`"],["!","1"],["@","2"],["#","3"],["$","4"],["%","5"],["^","6"],["&","7"],["*","8"],["(","9"],[")","0"],["+","="],""],
-      ["","~","|","\\","[","{","}","]","(",")","_",""],
+      ["Game","~","|","\\","[","{","}","]","(",")","_",""],
       ["","!","@","#","$","%","^","&","*","","",""],
       ["","","",H,"",""],
     ],
@@ -251,6 +252,7 @@ const LAYERS = [
       [". / -", "<b>Pass through</b> for <code>~/</code>, <code>1.5</code>, IPs"],
       ["Bksp", "<b>Backspace</b> works without releasing"],
       ["` ~ ^", "<b>Plain characters</b>, not dead keys"],
+      ["Game", "<b>Game mode</b> (Layer 4) on/off: left Space becomes a plain Space, for games like Minecraft; no NAV or FN until it's off"],
     ],
   },
   {
@@ -287,7 +289,7 @@ const LAYERS = [
     ],
   },
   {
-    name: "Layer 4", sub: "ACC",
+    name: "Layer 5", sub: "ACC",
     keys: [
       ["","","","è","","","","ù","ì","ò","","é",""],
       ["","à","","","","","","","","","",""],

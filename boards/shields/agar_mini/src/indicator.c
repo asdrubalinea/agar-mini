@@ -227,7 +227,7 @@ ZMK_SUBSCRIPTION(klink_battery_report, zmk_activity_state_changed);
 #define LAYER_NUM 1
 #define LAYER_NAV 2
 #define LAYER_FN  3
-#define LAYER_ACC 4
+#define LAYER_ACC 5
 
 static bool layer_on(zmk_keymap_layer_index_t index) {
     return zmk_keymap_layer_active(zmk_keymap_layer_index_to_id(index));

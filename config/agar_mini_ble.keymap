@@ -14,7 +14,8 @@
 #define NUM  1
 #define NAV  2
 #define FN   3
-#define ACC  4
+#define GAME 4
+#define ACC  5  // above GAME, so ' + left Space still types '
 
 #define SHIFTS (MOD_LSFT|MOD_RSFT)
 #define SHORTCUT_MODS (MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LGUI|MOD_RGUI)
@@ -132,7 +133,7 @@
             display-name = "Num";
             bindings = <
 &grave_mm  &kp N1    &kp N2  &kp N3    &kp N4    &kp N5     &six_mm     &kp N7    &kp N8    &kp N9    &kp N0     &kp EQUAL  &trans
-&trans     &lit_tilde &kp PIPE &kp BSLH &kp LBKT  &kp LBRC   &kp RBRC    &kp RBKT  &kp LPAR  &kp RPAR  &kp UNDER  &trans
+&tog GAME  &lit_tilde &kp PIPE &kp BSLH &kp LBKT  &kp LBRC   &kp RBRC    &kp RBKT  &kp LPAR  &kp RPAR  &kp UNDER  &trans
 &trans     &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT  &lit_caret  &kp AMPS  &kp STAR  &trans    &trans     &trans
            &trans    &trans                      &trans                 &trans                        &trans     &trans
             >;
@@ -158,6 +159,17 @@
             >;
         };
 
+        // Left Space is a plain key: games that poll key state miss a hold-tap's instant tap
+        game_layer {
+            display-name = "Game";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+        &trans  &trans          &kp SPACE                &trans                  &trans  &trans
+            >;
+        };
+
         acc_layer {
             display-name = "Acc";
             bindings = <
@@ -168,7 +180,6 @@
             >;
         };
 
-        layer5 { status = "reserved"; };
         layer6 { status = "reserved"; };
         layer7 { status = "reserved"; };
     };

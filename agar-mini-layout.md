@@ -50,7 +50,7 @@ Shift1× Z   X    C    V    B    N    M    ,    .    /    -
 
 ```
 `      1    2    3    4    5    6    7    8    9    0    =    ·
-·      ~    |    \    [    {    }    ]    (    )    _    ·
+Game   ~    |    \    [    {    }    ]    (    )    _    ·
 ·      !    @    #    $    %    ^    &    *    ·    ·    ·
        ·    ·    ·              held      ·    ·
 ```
@@ -59,6 +59,7 @@ Shift1× Z   X    C    V    B    N    M    ,    .    /    -
 - `.`, `/` and `-` stay available, so `~/`, `1.5` and `192.168.…` type without releasing the layer.
 - `` ` ``, `~` and `^` are sent as plain characters, not dead keys.
 - Super + digit switches mango workspace.
+- `Game` (Tab position) turns the GAME layer on and off.
 
 ### Layer 2 — NAV (hold left Space)
 
@@ -86,7 +87,24 @@ Caps   BT1  BT2  BT3  USB  BLE  Prev Vol- Vol+ Next Play Mute
   These are the stock KBDfans keys, so the status light reacts as before.
 - `USB` / `BLE` switch the output.
 
-### Layer 4 — ACC (tap `'`, then the key)
+### Layer 4 — GAME (hold right Space, tap `Tab`, to turn on or off)
+
+```
+·      ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·
+·      ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·
+·      ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·
+       ·    ·    Space          ·         ·    ·
+```
+
+- Left Space is a plain Space: it is pressed for as long as the key is held.
+- Why: as a hold-tap, Space is sent as press + release together when the key comes up.
+  Games that check once per frame whether Space is down (Minecraft: every 50 ms) miss that,
+  and holding gives NAV instead of a held Space. Games that read key events (Cyberpunk) are fine.
+- While it is on, NAV and FN can't be reached. NUM still works, so `Game` turns it off again.
+  It is also off after the keyboard restarts.
+- `'` + Space still types `'`: ACC sits above GAME.
+
+### Layer 5 — ACC (tap `'`, then the key)
 
 ```
 ·      ·    ·    è    ·    ·    ·    ù    ì    ò    ·    é    ·
@@ -127,6 +145,7 @@ Caps   BT1  BT2  BT3  USB  BLE  Prev Vol- Vol+ Next Play Mute
 | Focus up / down | `Super+Up` | hold left Space, tap `A`, tap `K` |
 | Kitty tab | `Alt+3` | hold left Space, tap `S` (Alt), then hold right Space + tap `E` |
 | Accept fish autosuggestion | `Right` | tap → (bottom right) |
+| Game mode on / off | | hold right Space, tap `Tab` |
 
 No mango config changes are needed.
 
@@ -264,7 +283,8 @@ To go back to stock, flash KBDfans' `agar_mini-klink-zmk.uf2` from the
   The morph masks Shift while the macro runs, so the dead key itself is never shifted.
 - Sticky modifiers: `&sk` with `release-after-ms = 1500` and `quick-release`.
 - FN: conditional layer, active when NAV and NUM are both active.
-- Layers 5–7 are reserved so ZMK Studio can add layers later.
+- GAME: toggled with `&tog`, so it isn't saved and is off after a restart.
+- Layers 6–7 are reserved so ZMK Studio can add layers later.
 
 ## Dropped from the stock layout
 
